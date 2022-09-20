@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/wavegate/express_learning/issues"
   },
-  "homepage": "https://github.com/wavegate/express_learning#readme"
+  "homepage": "https://github.com/wavegate/express_learning#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
 }
