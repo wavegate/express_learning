@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar.js";
 import CreateForm from "./components/CreateForm.js";
 import Error from "./components/Error.js";
 import { Helmet } from "react-helmet";
+import { BrowserRouter } from "react-router-dom";
 
 const User = () => {
   const { dispatch } = useAppContext();
@@ -84,16 +85,18 @@ const Users = () => {
 const App = () => {
   return (
     <div className="App">
-      <CssBaseline />
-      <Navbar />
-      <Container maxWidth="lg">
-        <Routes>
-          <Route exact path="/" element={<Users />} />
-          <Route path="/:id" element={<User />} />
-          <Route path="/create" element={<CreateForm />} />
-          <Route path="*" element={<Error />} />
-        </Routes>
-      </Container>
+      <BrowserRouter>
+        <CssBaseline />
+        <Navbar />
+        <Container maxWidth="lg">
+          <Routes>
+            <Route exact path="/" element={<Users />} />
+            <Route path="/:id" element={<User />} />
+            <Route path="/create" element={<CreateForm />} />
+            <Route path="*" element={<Error />} />
+          </Routes>
+        </Container>
+      </BrowserRouter>
     </div>
   );
 };
