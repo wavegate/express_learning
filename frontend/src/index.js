@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import { AppContextProvider } from "./contexts/AppContext";
 import { AuthContextProvider } from "./contexts/AuthContext";
 import { HelmetProvider } from "react-helmet-async";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -13,7 +14,11 @@ root.render(
     <AppContextProvider>
       <AuthContextProvider>
         <HelmetProvider>
-          <App />
+          <GoogleOAuthProvider
+            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+          >
+            <App />
+          </GoogleOAuthProvider>
         </HelmetProvider>
       </AuthContextProvider>
     </AppContextProvider>

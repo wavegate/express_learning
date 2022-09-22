@@ -31,10 +31,10 @@ userRouter.post("/login", async (req, res, next) => {
 });
 
 userRouter.post("/register", async (req, res, next) => {
-  const { email, password } = req.body;
+  const { email, password, party } = req.body;
 
   try {
-    const user = await User.register(email, password);
+    const user = await User.register(email, password, party);
     const token = createToken(user._id);
     res.status(200).json({ email, token });
   } catch (error) {

@@ -8,14 +8,15 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { Link, useNavigate } from "react-router-dom";
 import classes from "../scss_modules/Navbar.module.scss";
 import useAuthContext from "../hooks/useAuthContext.js";
+import useLogout from "../hooks/useLogout.js";
 
 export default function Navbar() {
-  const { user, dispatch } = useAuthContext();
+  const { user } = useAuthContext();
   const navigate = useNavigate();
+  const { logout } = useLogout();
 
-  const logout = (event) => {
-    localStorage.setItem("user", null);
-    dispatch({ type: "LOGOUT" });
+  const handleLogout = () => {
+    logout();
     navigate("/");
   };
 
@@ -60,7 +61,7 @@ export default function Navbar() {
               </Link>
             )}
             {user && (
-              <Button color="inherit" onClick={logout}>
+              <Button color="inherit" onClick={handleLogout}>
                 Logout
               </Button>
             )}
