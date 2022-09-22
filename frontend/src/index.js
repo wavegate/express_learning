@@ -3,13 +3,19 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { AppContextProvider } from "./context/AppContext";
+import { AppContextProvider } from "./contexts/AppContext";
+import { AuthContextProvider } from "./contexts/AuthContext";
+import { HelmetProvider } from "react-helmet-async";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <AppContextProvider>
-      <App />
+      <AuthContextProvider>
+        <HelmetProvider>
+          <App />
+        </HelmetProvider>
+      </AuthContextProvider>
     </AppContextProvider>
   </React.StrictMode>
 );

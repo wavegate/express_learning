@@ -1,6 +1,9 @@
 import express from "express";
 import Object from "../models/objectModel.js";
+import requireAuth from "../middleware/requireAuth.js";
 const objectRouter = express.Router();
+
+objectRouter.use(requireAuth);
 
 objectRouter.get("/", (req, res, next) => {
   Object.find({})

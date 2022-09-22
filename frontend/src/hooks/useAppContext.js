@@ -1,7 +1,7 @@
-import { AppContext } from "../context/AppContext";
+import { AppContext } from "../contexts/AppContext";
 import { useContext } from "react";
 
-export const useAppContext = () => {
+const useAppContext = () => {
   const context = useContext(AppContext);
 
   if (!context) {
@@ -10,3 +10,5 @@ export const useAppContext = () => {
 
   return context;
 };
+
+export default useAppContext;

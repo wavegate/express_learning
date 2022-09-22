@@ -31,18 +31,21 @@ const lorem = new LoremIpsum({
 
 for (let i = 0; i < 5; i++) {
   const newObject = new Object({
-    name: `Agent ${i}`,
-    description: lorem.generateSentences(5),
+    name: `Object ${i}`,
+    description: lorem.generateSentences(20),
   });
   await newObject.save();
 }
 
-import objectRouter from "./routes/objectRouter.js";
-app.use("/users", objectRouter);
+import User from "./models/userModel.js";
 
-// app.get("/", (req, res, next) => {
-//   res.sendFile(__dirname + "/index.html");
-// });
+await User.deleteMany({});
+User.register("test@test.com", "ZlxE!9G!ZL40");
+
+import objectRouter from "./routes/objectRouter.js";
+app.use("/objects", objectRouter);
+import userRouter from "./routes/userRouter.js";
+app.use("/users", userRouter);
 
 const port = 8000;
 app.listen(port, () => {
