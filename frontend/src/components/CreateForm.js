@@ -4,13 +4,14 @@ import { useState, Fragment } from "react";
 import classes from "../scss_modules/Form.module.scss";
 import useAuthContext from "../hooks/useAuthContext";
 import { Helmet } from "react-helmet-async";
-import { TextField, Button } from "@mui/material";
+import { TextField, Button, Alert } from "@mui/material";
 
 const CreateForm = () => {
   const { user } = useAuthContext();
   const { dispatch } = useAppContext();
   const history = useNavigate();
   const [formData, setFormData] = useState();
+  const [error, setError] = useState();
 
   const handleChange = ({ target }) => {
     setFormData({ ...formData, [target.name]: target.value });
@@ -31,6 +32,8 @@ const CreateForm = () => {
       if (response.ok) {
         dispatch({ type: "CREATE_OBJECT", payload: data });
         history("/");
+      } else {
+        setError(data.error);
       }
     };
     if (user) {
@@ -65,6 +68,7 @@ const CreateForm = () => {
               Submit
             </Button>
           </form>
+          {error && <Alert severity="error">{error}</Alert>}
         </Fragment>
       )}
       {!user && <p>Please login to continue.</p>}

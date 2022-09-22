@@ -17,14 +17,18 @@ objectRouter.get("/create", (req, res, next) => {
   res.render("create_user");
 });
 
-objectRouter.post("/create", (req, res, next) => {
-  const newObject = new Object({
-    name: req.body.name,
-    description: req.body.description,
-  });
-  newObject.save().then(() => {
-    res.json(newObject);
-  });
+objectRouter.post("/create", async (req, res, next) => {
+  const { name, description } = req.body;
+  if (!name || !description) {
+    return res.status(400).json({ error: "Please fill out all fields" });
+  }
+
+  try {
+    const object = await Object.create({ name, description });
+    res.status(200).json(object);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 });
 
 objectRouter.get("/:id", (req, res, next) => {
