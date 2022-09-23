@@ -7,6 +7,7 @@ import CreateForm from "./components/CreateForm.js";
 import Error from "./components/Error.js";
 import Syllabus from "./components/Syllabus.js";
 import Lectures from "./components/Lectures.js";
+import Profile from "./components/Profile.js";
 
 import { BrowserRouter, Link } from "react-router-dom";
 
@@ -122,10 +123,10 @@ const App = () => {
                 <ForumIcon className="item__icon" />
                 <div className="item__text">Discussion</div>
               </li>
-              <li className="sidebar_block__item">
+              <Link to="/profile" className="sidebar_block__item">
                 <AccountCircleIcon className="item__icon" />
                 <div className="item__text">Profile</div>
-              </li>
+              </Link>
               <li className="sidebar_block__item">
                 <GroupsIcon className="item__icon" />
                 <div className="item__text">Classmates</div>
@@ -158,6 +159,7 @@ const App = () => {
           <Routes>
             <Route path="/syllabus" element={<Syllabus />}></Route>
             <Route path="/lectures" element={<Lectures />}></Route>
+            <Route path="/profile" element={<Profile />}></Route>
           </Routes>
         </div>
       </BrowserRouter>

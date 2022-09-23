@@ -1,8 +1,3 @@
-.Syllabus {
-  width: 100%;
-  height: 100%;
-}
-
 .header {
   height: 110px;
   display: flex;
@@ -41,17 +36,15 @@
 
 .content {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  padding: 24px;
-  gap: 24px;
+  grid-template-columns: 250px auto;
+  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 .content_box {
   background: white;
-  border-radius: 4px;
-  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
+  border-left: 2px solid rgb(245, 245, 245);
 }
 
 .content_box__title {
@@ -77,4 +70,26 @@
   height: 100%;
   width: 100%;
   position: absolute;
+}
+
+.lecture_item {
+  display: flex;
+  align-items: center;
+  &:hover {
+    cursor: pointer;
+  }
+  padding: 6px 0px;
+}
+
+.lecture_item__text {
+  flex: 1;
+}
+
+.playIcon,
+.checkIcon {
+  color: #5ed597;
+}
+
+.playIcon {
+  margin-right: 8px;
 }

@@ -1,9 +1,11 @@
-import classes from "../scss_modules/Syllabus.module.scss";
+import classes from "../scss_modules/Lectures.module.scss";
 import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import CheckIcon from "@mui/icons-material/Check";
 
 const Lectures = () => {
   return (
-    <div className={classes.Syllabus}>
+    <div className={classes.Lectures}>
       <div className={classes.header}>
         <div className={classes.iconBox}>
           <OndemandVideoIcon fontSize="large" className={classes.icon} />
@@ -20,24 +22,31 @@ const Lectures = () => {
       </div>
       <div className={classes.content}>
         <div className={classes.content_box}>
-          <div className={classes.content_box__title}>Curriculum</div>
+          <div className={classes.content_box__title}>
+            1.1: Intro to Web Dev
+          </div>
           <div className={classes.content_box__text}>
-            <ul>
-              <li>1.1</li>
-              <li>1.2</li>
-              <li>1.3</li>
-              <li>1.4</li>
-              <li>1.5</li>
-              <li>1.6</li>
-              <li>1.7</li>
-            </ul>
+            <ol className={classes.lecture_list}>
+              <li className={classes.lecture_item}>
+                <PlayArrowIcon className={classes.playIcon} />
+                <div className={classes.lecture_item__text}>1. Intro</div>
+                <CheckIcon className={classes.checkIcon} />
+              </li>
+              <li className={classes.lecture_item}>
+                <PlayArrowIcon className={classes.playIcon} />
+                <div className={classes.lecture_item__text}>2. HTML</div>
+                <CheckIcon className={classes.checkIcon} />
+              </li>
+              <li className={classes.lecture_item}>
+                <PlayArrowIcon className={classes.playIcon} />
+                <div className={classes.lecture_item__text}>3. CSS</div>
+                <CheckIcon className={classes.checkIcon} />
+              </li>
+            </ol>
           </div>
         </div>
         <div className={classes.content_box}>
-          <div className={classes.content_box__title}>
-            1.1 Intro to Web Development
-          </div>
-
+          <div className={classes.content_box__title}>Intro</div>
           <div className={classes.video_responsive}>
             <iframe
               src="https://www.youtube.com/embed/EqzUcMzfV1w"
