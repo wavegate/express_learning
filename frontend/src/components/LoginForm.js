@@ -1,12 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import classes from "../scss_modules/Form.module.scss";
+// import classes from "../scss_modules/Form.module.scss";
 import { Helmet } from "react-helmet-async";
-import { TextField, Button, Alert } from "@mui/material";
+import { Alert } from "@mui/material";
 import { GoogleLogin } from "@react-oauth/google";
 import jwt_decode from "jwt-decode";
 import useLogin from "../hooks/useLogin.js";
 import useRegister from "../hooks/useRegister.js";
+import classes from "../scss_modules/Login.module.scss";
+import studying from "../images/studying.svg";
+import logo from "../images/Argos.png";
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
@@ -39,41 +42,77 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="CreateForm">
+    <div className={classes.Login}>
       <Helmet>
         <title>Login</title>
       </Helmet>
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit} className={classes.form}>
-        <TextField
-          id="email"
-          name="email"
-          label="Email"
-          variant="outlined"
-          onChange={handleChange}
-          value={formData.email}
-        />
-        <TextField
-          id="password"
-          name="password"
-          label="Password"
-          variant="outlined"
-          onChange={handleChange}
-          value={formData.password}
-        />
-        <Button variant="contained" type="submit" disabled={isLoading}>
-          Submit
-        </Button>
-      </form>
-      {error && <Alert severity="error">{error}</Alert>}
-      <GoogleLogin
-        onSuccess={(credentialResponse) => {
-          handleGoogleLogin(credentialResponse);
-        }}
-        onError={() => {
-          console.log("Login Failed");
-        }}
-      />
+      <div className={classes.loginContainer}>
+        <div className={classes.leftSide}>
+          <img src={logo} alt="Argos_logo" className={classes.logo}></img>
+          <img
+            src={studying}
+            alt="studying"
+            className={classes.studying_img}
+          ></img>
+        </div>
+        <div className={classes.rightSide}>
+          <div className={classes.form_header}>Login to Argos</div>
+          <GoogleLogin
+            onSuccess={(credentialResponse) => {
+              handleGoogleLogin(credentialResponse);
+            }}
+            onError={() => {
+              console.log("Login Failed");
+            }}
+          />
+          <form onSubmit={handleSubmit} className={classes.form}>
+            <div className={classes.formGroup}>
+              <label for="email">Email</label>
+              <input
+                type="text"
+                id="email"
+                name="email"
+                onChange={handleChange}
+                value={formData.email}
+                className={classes.formInput}
+              />
+            </div>
+            <div className={classes.formGroup}>
+              <label for="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                onChange={handleChange}
+                value={formData.password}
+                className={classes.formInput}
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={isLoading}
+              className={classes.loginButton}
+            >
+              Login
+            </button>
+            <button
+              type="submit"
+              disabled={isLoading}
+              className={classes.loginButton}
+            >
+              Login as Guest Student
+            </button>
+            <button
+              type="submit"
+              disabled={isLoading}
+              className={classes.loginButton}
+            >
+              Login as Guest Teacher
+            </button>
+          </form>
+          {error && <Alert severity="error">{error}</Alert>}
+        </div>
+      </div>
     </div>
   );
 };

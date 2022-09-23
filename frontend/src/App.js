@@ -18,6 +18,8 @@ import LoginForm from "./components/LoginForm.js";
 import RegisterForm from "./components/RegisterForm.js";
 import useAuthContext from "./hooks/useAuthContext";
 
+import useLogout from "./hooks/useLogout.js";
+
 import logo from "./images/Argos.png";
 import avatar from "./images/avatar1.png";
 import SearchIcon from "@mui/icons-material/Search";
@@ -51,6 +53,11 @@ const App = () => {
     color: "#545cd8",
     fontWeight: "600",
   };
+  const { logout } = useLogout();
+
+  const handleLogout = () => {
+    logout();
+  };
   return (
     <div className="App">
       <BrowserRouter>
@@ -75,6 +82,10 @@ const App = () => {
               <div className="identity__role">Student</div>
             </div>
           </div>
+          <Link to="/login">
+            <button>Login</button>
+          </Link>
+          {user && <button onClick={handleLogout}>Logout</button>}
           <div className="language_selector">
             <img
               src={USFlag}
@@ -188,11 +199,16 @@ const App = () => {
         </div>
         <div className="main">
           <Routes>
+            <Route path="/" element={<Syllabus />}></Route>
             <Route path="/live_class" element={<Syllabus />}></Route>
             <Route path="/syllabus" element={<Syllabus />}></Route>
             <Route path="/lectures/*" element={<Lectures />}></Route>
             <Route path="/profile" element={<Profile />}></Route>
             <Route path="/calendar" element={<Calendar />}></Route>
+            <Route
+              path="/login"
+              element={!user ? <LoginForm /> : <Navigate to="/" />}
+            ></Route>
           </Routes>
           <Outlet />
         </div>

@@ -1,0 +1,78 @@
+.Login {
+  background: #9796f0; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to bottom,
+    #fbc7d4,
+    #9796f0
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    240deg,
+    #fbc7d4,
+    #9796f0
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  height: 100%;
+}
+.loginContainer {
+  width: 800px;
+  height: 600px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.leftSide {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.rightSide {
+  background: #fff0ee;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form_header {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.formInput {
+  height: 40px;
+  border-radius: 8px;
+  outline: 1px solid rgba(0, 0, 0, 0.3);
+  border: none;
+  padding: 12px;
+
+  &:focus {
+    outline: 1px solid #545cd7;
+  }
+}
+
+.studying_img {
+  width: 80%;
+}
