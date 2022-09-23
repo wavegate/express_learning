@@ -5,8 +5,10 @@ import Container from "@mui/material/Container";
 import Navbar from "./components/Navbar.js";
 import CreateForm from "./components/CreateForm.js";
 import Error from "./components/Error.js";
+import Syllabus from "./components/Syllabus.js";
+import Lectures from "./components/Lectures.js";
 
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Link } from "react-router-dom";
 
 import Object from "./components/Object.js";
 import Objects from "./components/Objects.js";
@@ -43,115 +45,122 @@ const App = () => {
   const { user } = useAuthContext();
   return (
     <div className="App">
-      <CssBaseline />
-      <div className="nav">
-        <MenuIcon className="menuButton" fontSize="large" />
-        <div className="logoSpace">
-          <img src={logo} alt="Argos_logo" className="logo"></img>
-        </div>
-        <div className="searchbar">
-          <input
-            type="text"
-            placeholder="Search..."
-            className="searchbar__input"
-          ></input>
-          <SearchIcon className="searchbar__icon" />
-        </div>
-        <div class="identity">
-          <img src={avatar} alt="avatar" className="avatar"></img>
-          <div class="identity__text">
-            <div className="identity__name">John Smith</div>
-            <div className="identity__role">Student</div>
+      <BrowserRouter>
+        <CssBaseline />
+        <div className="nav">
+          <MenuIcon className="menuButton" fontSize="large" />
+          <div className="logoSpace">
+            <img src={logo} alt="Argos_logo" className="logo"></img>
+          </div>
+          <div className="searchbar">
+            <input
+              type="text"
+              placeholder="Search..."
+              className="searchbar__input"
+            ></input>
+            <SearchIcon className="searchbar__icon" />
+          </div>
+          <div className="identity">
+            <img src={avatar} alt="avatar" className="avatar"></img>
+            <div className="identity__text">
+              <div className="identity__name">John Smith</div>
+              <div className="identity__role">Student</div>
+            </div>
+          </div>
+          <div className="language_selector">
+            <img
+              src={USFlag}
+              alt="US English"
+              className="language_selector__flag"
+            ></img>
+            <div className="language_selector__text">EN</div>
+            <KeyboardArrowDownIcon />
           </div>
         </div>
-        <div className="language_selector">
-          <img
-            src={USFlag}
-            alt="US English"
-            className="language_selector__flag"
-          ></img>
-          <div className="language_selector__text">EN</div>
-          <KeyboardArrowDownIcon />
+        <div className="sidebar">
+          <div className="sidebar_block">
+            <div className="sidebar_block__heading">Course</div>
+            <ul className="sidebar_block__list">
+              <li className="sidebar_block__item">
+                <DashboardIcon className="item__icon" />
+                <div className="item__text">Dashboard</div>
+              </li>
+              <li className="sidebar_block__item">
+                <AnnouncementIcon className="item__icon" />
+                <div className="item__text">Announcements</div>
+              </li>
+              <Link to="/syllabus" className="sidebar_block__item">
+                <MenuBookIcon className="item__icon" />
+                <div className="item__text">Syllabus</div>
+              </Link>
+              <Link to="/lectures" className="sidebar_block__item">
+                <OndemandVideoIcon className="item__icon" />
+                <div className="item__text">Lectures</div>
+              </Link>
+              <li className="sidebar_block__item">
+                <DriveFileRenameOutlineIcon className="item__icon" />
+                <div className="item__text">Assignments</div>
+              </li>
+              <li className="sidebar_block__item">
+                <QuizIcon className="item__icon" />
+                <div className="item__text">Quizzes</div>
+              </li>
+              <li className="sidebar_block__item">
+                <GradingIcon className="item__icon" />
+                <div className="item__text">Grades</div>
+              </li>
+              <li className="sidebar_block__item">
+                <LibraryBooksIcon className="item__icon" />
+                <div className="item__text">Resources</div>
+              </li>
+            </ul>
+          </div>
+          <div className="sidebar_block">
+            <div className="sidebar_block__heading">Social</div>
+            <ul className="sidebar_block__list">
+              <li className="sidebar_block__item">
+                <ForumIcon className="item__icon" />
+                <div className="item__text">Discussion</div>
+              </li>
+              <li className="sidebar_block__item">
+                <AccountCircleIcon className="item__icon" />
+                <div className="item__text">Profile</div>
+              </li>
+              <li className="sidebar_block__item">
+                <GroupsIcon className="item__icon" />
+                <div className="item__text">Classmates</div>
+              </li>
+              <li className="sidebar_block__item">
+                <EmailIcon className="item__icon" />
+                <div className="item__text">Inbox</div>
+              </li>
+            </ul>
+          </div>
+          <div className="sidebar_block">
+            <div className="sidebar_block__heading">Productivity</div>
+            <ul className="sidebar_block__list">
+              <li className="sidebar_block__item">
+                <CalendarMonthIcon className="item__icon" />
+                <div className="item__text">Calendar</div>
+              </li>
+              <li className="sidebar_block__item">
+                <PlaylistAddCheckIcon className="item__icon" />
+                <div className="item__text">Todo</div>
+              </li>
+              <li className="sidebar_block__item">
+                <EventNoteIcon className="item__icon" />
+                <div className="item__text">Notes</div>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
-      <div className="sidebar">
-        <div className="sidebar_block">
-          <div className="sidebar_block__heading">Course</div>
-          <ul className="sidebar_block__list">
-            <li className="sidebar_block__item">
-              <DashboardIcon className="item__icon" />
-              <div className="item__text">Dashboard</div>
-            </li>
-            <li className="sidebar_block__item">
-              <AnnouncementIcon className="item__icon" />
-              <div className="item__text">Announcements</div>
-            </li>
-            <li className="sidebar_block__item">
-              <MenuBookIcon className="item__icon" />
-              <div className="item__text">Syllabus</div>
-            </li>
-            <li className="sidebar_block__item">
-              <OndemandVideoIcon className="item__icon" />
-              <div className="item__text">Lectures</div>
-            </li>
-            <li className="sidebar_block__item">
-              <DriveFileRenameOutlineIcon className="item__icon" />
-              <div className="item__text">Assignments</div>
-            </li>
-            <li className="sidebar_block__item">
-              <QuizIcon className="item__icon" />
-              <div className="item__text">Quizzes</div>
-            </li>
-            <li className="sidebar_block__item">
-              <GradingIcon className="item__icon" />
-              <div className="item__text">Grades</div>
-            </li>
-            <li className="sidebar_block__item">
-              <LibraryBooksIcon className="item__icon" />
-              <div className="item__text">Resources</div>
-            </li>
-          </ul>
+        <div className="main">
+          <Routes>
+            <Route path="/syllabus" element={<Syllabus />}></Route>
+            <Route path="/lectures" element={<Lectures />}></Route>
+          </Routes>
         </div>
-        <div className="sidebar_block">
-          <div className="sidebar_block__heading">Social</div>
-          <ul className="sidebar_block__list">
-            <li className="sidebar_block__item">
-              <ForumIcon className="item__icon" />
-              <div className="item__text">Discussion</div>
-            </li>
-            <li className="sidebar_block__item">
-              <AccountCircleIcon className="item__icon" />
-              <div className="item__text">Profile</div>
-            </li>
-            <li className="sidebar_block__item">
-              <GroupsIcon className="item__icon" />
-              <div className="item__text">Classmates</div>
-            </li>
-            <li className="sidebar_block__item">
-              <EmailIcon className="item__icon" />
-              <div className="item__text">Inbox</div>
-            </li>
-          </ul>
-        </div>
-        <div className="sidebar_block">
-          <div className="sidebar_block__heading">Productivity</div>
-          <ul className="sidebar_block__list">
-            <li className="sidebar_block__item">
-              <CalendarMonthIcon className="item__icon" />
-              <div className="item__text">Calendar</div>
-            </li>
-            <li className="sidebar_block__item">
-              <PlaylistAddCheckIcon className="item__icon" />
-              <div className="item__text">Todo</div>
-            </li>
-            <li className="sidebar_block__item">
-              <EventNoteIcon className="item__icon" />
-              <div className="item__text">Notes</div>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div className="main"></div>
+      </BrowserRouter>
       {/* <BrowserRouter>
         <CssBaseline />
         <Navbar />
