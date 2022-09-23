@@ -8,8 +8,9 @@ import Error from "./components/Error.js";
 import Syllabus from "./components/Syllabus.js";
 import Lectures from "./components/Lectures.js";
 import Profile from "./components/Profile.js";
+import Calendar from "./components/Calendar.js";
 
-import { BrowserRouter, Link } from "react-router-dom";
+import { BrowserRouter, Link, Outlet, NavLink } from "react-router-dom";
 
 import Object from "./components/Object.js";
 import Objects from "./components/Objects.js";
@@ -41,9 +42,15 @@ import EmailIcon from "@mui/icons-material/Email";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import PlaylistAddCheckIcon from "@mui/icons-material/PlaylistAddCheck";
 import EventNoteIcon from "@mui/icons-material/EventNote";
+import LiveTvIcon from "@mui/icons-material/LiveTv";
 
 const App = () => {
   const { user } = useAuthContext();
+  const activeStyle = {
+    background: "#E0F3FF",
+    color: "#545cd8",
+    fontWeight: "600",
+  };
   return (
     <div className="App">
       <BrowserRouter>
@@ -86,18 +93,34 @@ const App = () => {
                 <DashboardIcon className="item__icon" />
                 <div className="item__text">Dashboard</div>
               </li>
+              <NavLink
+                to="/live_class"
+                className="sidebar_block__item"
+                style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              >
+                <LiveTvIcon className="item__icon" />
+                <div className="item__text">Live Class</div>
+              </NavLink>
               <li className="sidebar_block__item">
                 <AnnouncementIcon className="item__icon" />
                 <div className="item__text">Announcements</div>
               </li>
-              <Link to="/syllabus" className="sidebar_block__item">
+              <NavLink
+                to="/syllabus"
+                className="sidebar_block__item"
+                style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              >
                 <MenuBookIcon className="item__icon" />
                 <div className="item__text">Syllabus</div>
-              </Link>
-              <Link to="/lectures" className="sidebar_block__item">
+              </NavLink>
+              <NavLink
+                to="/lectures"
+                className="sidebar_block__item"
+                style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              >
                 <OndemandVideoIcon className="item__icon" />
                 <div className="item__text">Lectures</div>
-              </Link>
+              </NavLink>
               <li className="sidebar_block__item">
                 <DriveFileRenameOutlineIcon className="item__icon" />
                 <div className="item__text">Assignments</div>
@@ -123,10 +146,14 @@ const App = () => {
                 <ForumIcon className="item__icon" />
                 <div className="item__text">Discussion</div>
               </li>
-              <Link to="/profile" className="sidebar_block__item">
+              <NavLink
+                to="/profile"
+                className="sidebar_block__item"
+                style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              >
                 <AccountCircleIcon className="item__icon" />
                 <div className="item__text">Profile</div>
-              </Link>
+              </NavLink>
               <li className="sidebar_block__item">
                 <GroupsIcon className="item__icon" />
                 <div className="item__text">Classmates</div>
@@ -140,10 +167,14 @@ const App = () => {
           <div className="sidebar_block">
             <div className="sidebar_block__heading">Productivity</div>
             <ul className="sidebar_block__list">
-              <li className="sidebar_block__item">
+              <NavLink
+                to="/calendar"
+                className="sidebar_block__item"
+                style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              >
                 <CalendarMonthIcon className="item__icon" />
                 <div className="item__text">Calendar</div>
-              </li>
+              </NavLink>
               <li className="sidebar_block__item">
                 <PlaylistAddCheckIcon className="item__icon" />
                 <div className="item__text">Todo</div>
@@ -157,10 +188,13 @@ const App = () => {
         </div>
         <div className="main">
           <Routes>
+            <Route path="/live_class" element={<Syllabus />}></Route>
             <Route path="/syllabus" element={<Syllabus />}></Route>
-            <Route path="/lectures" element={<Lectures />}></Route>
+            <Route path="/lectures/*" element={<Lectures />}></Route>
             <Route path="/profile" element={<Profile />}></Route>
+            <Route path="/calendar" element={<Calendar />}></Route>
           </Routes>
+          <Outlet />
         </div>
       </BrowserRouter>
       {/* <BrowserRouter>
