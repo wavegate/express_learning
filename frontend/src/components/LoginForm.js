@@ -67,7 +67,7 @@ const LoginForm = () => {
           />
           <form onSubmit={handleSubmit} className={classes.form}>
             <div className={classes.formGroup}>
-              <label for="email">Email</label>
+              <label htmlFor="email">Email</label>
               <input
                 type="text"
                 id="email"
@@ -78,7 +78,7 @@ const LoginForm = () => {
               />
             </div>
             <div className={classes.formGroup}>
-              <label for="password">Password</label>
+              <label htmlFor="password">Password</label>
               <input
                 type="password"
                 id="password"

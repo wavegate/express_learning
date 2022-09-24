@@ -1,0 +1,31 @@
+.header {
+  height: 110px;
+  display: flex;
+  padding: 24px;
+  align-items: center;
+  background: linear-gradient(rgba(0, 0, 0, 0), rgba(255, 255, 255, 0.6));
+}
+
+.iconBox {
+  width: 60px;
+  height: 60px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 24px;
+}
+
+.header__text {
+  flex: 1;
+}
+
+.header__title {
+  font-size: 22px;
+}
+
+.header__subtitle {
+  color: #94979c;
+}

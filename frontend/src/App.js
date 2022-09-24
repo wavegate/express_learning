@@ -9,6 +9,7 @@ import Syllabus from "./components/Syllabus.js";
 import Lectures from "./components/Lectures.js";
 import Profile from "./components/Profile.js";
 import Calendar from "./components/Calendar.js";
+import Todo from "./components/Todo.js";
 
 import { BrowserRouter, Link, Outlet, NavLink } from "react-router-dom";
 
@@ -75,13 +76,16 @@ const App = () => {
             ></input>
             <SearchIcon className="searchbar__icon" />
           </div>
-          <div className="identity">
-            <img src={avatar} alt="avatar" className="avatar"></img>
-            <div className="identity__text">
-              <div className="identity__name">John Smith</div>
-              <div className="identity__role">Student</div>
+          {user && (
+            <div className="identity">
+              <img src={avatar} alt="avatar" className="avatar"></img>
+              <div className="identity__text">
+                <div className="identity__name">John Smith</div>
+                <div className="identity__role">Student</div>
+              </div>
             </div>
-          </div>
+          )}
+
           <Link to="/login">
             <button>Login</button>
           </Link>
@@ -186,10 +190,14 @@ const App = () => {
                 <CalendarMonthIcon className="item__icon" />
                 <div className="item__text">Calendar</div>
               </NavLink>
-              <li className="sidebar_block__item">
+              <NavLink
+                to="/todo"
+                className="sidebar_block__item"
+                style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              >
                 <PlaylistAddCheckIcon className="item__icon" />
                 <div className="item__text">Todo</div>
-              </li>
+              </NavLink>
               <li className="sidebar_block__item">
                 <EventNoteIcon className="item__icon" />
                 <div className="item__text">Notes</div>
@@ -199,15 +207,39 @@ const App = () => {
         </div>
         <div className="main">
           <Routes>
-            <Route path="/" element={<Syllabus />}></Route>
-            <Route path="/live_class" element={<Syllabus />}></Route>
-            <Route path="/syllabus" element={<Syllabus />}></Route>
-            <Route path="/lectures/*" element={<Lectures />}></Route>
-            <Route path="/profile" element={<Profile />}></Route>
-            <Route path="/calendar" element={<Calendar />}></Route>
+            <Route
+              path="/"
+              element={
+                user ? <Navigate to="/dashboard" /> : <Navigate to="/login" />
+              }
+            ></Route>
+            <Route
+              path="/live_class"
+              element={user ? <Syllabus /> : <Navigate to="/login" />}
+            ></Route>
+            <Route
+              path="/syllabus"
+              element={user ? <Syllabus /> : <Navigate to="/login" />}
+            ></Route>
+            <Route
+              path="/lectures/*"
+              element={user ? <Lectures /> : <Navigate to="/login" />}
+            ></Route>
+            <Route
+              path="/profile"
+              element={user ? <Profile /> : <Navigate to="/login" />}
+            ></Route>
+            <Route
+              path="/calendar"
+              element={user ? <Calendar /> : <Navigate to="/login" />}
+            ></Route>
+            <Route
+              path="/todo"
+              element={user ? <Todo /> : <Navigate to="/login" />}
+            ></Route>
             <Route
               path="/login"
-              element={!user ? <LoginForm /> : <Navigate to="/" />}
+              element={!user ? <LoginForm /> : <Navigate to="/dashboard" />}
             ></Route>
           </Routes>
           <Outlet />

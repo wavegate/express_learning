@@ -1,8 +1,3 @@
-.Syllabus {
-  width: 100%;
-  height: 100%;
-}
-
 .content {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -11,7 +6,7 @@
 }
 
 .icon {
-  color: #fb818c;
+  color: #59a7ff;
 }
 
 .content_box {
@@ -30,19 +25,4 @@
 
 .content_box__text {
   padding: 16px;
-}
-
-.video_responsive {
-  overflow: hidden;
-  padding-bottom: 56.25%;
-  position: relative;
-  height: 0;
-}
-
-.video_responsive iframe {
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  position: absolute;
 }

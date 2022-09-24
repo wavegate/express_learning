@@ -1,24 +1,15 @@
 import classes from "../scss_modules/Syllabus.module.scss";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
+import Header from "./Header.js";
 
 const Syllabus = () => {
   return (
     <div className={classes.Syllabus}>
-      <div className={classes.header}>
-        <div className={classes.iconBox}>
-          <MenuBookIcon fontSize="large" className={classes.icon} />
-        </div>
-
-        <div className={classes.header__text}>
-          <div className={classes.header__title}>Syllabus</div>
-          <div className={classes.header__subtitle}>
-            This page provides information about the Argos CS101 class on Web
-            Development relevant only to the Fall 2022 semester.
-          </div>
-        </div>
-        <div className={classes.header__star}>Star button</div>
-        <div className={classes.header__more}>More buttons</div>
-      </div>
+      <Header
+        title="Syllabus"
+        detail="This page provides information about the Argos CS101 class on Web Development relevant only to the Fall 2022 semester."
+        icon={<MenuBookIcon fontSize="large" className={classes.icon} />}
+      />
       <div className={classes.content}>
         <div className={classes.content_box}>
           <div className={classes.content_box__title}>Curriculum</div>
