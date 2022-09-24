@@ -21,10 +21,15 @@ const Todo = () => {
   });
   const [error, setError] = useState();
   const [editError, setEditError] = useState();
-  const [open, setOpen] = useState();
+  const [open, setOpen] = useState(true);
+  const [editOpen, setEditOpen] = useState();
   const [editFormData, setEditFormData] = useState({});
-  const handleOpen = (item_id) => {
+  const handleOpen = () => {
     setOpen(true);
+  };
+
+  const handleEditOpen = (item_id) => {
+    setEditOpen(true);
     const currentTodo = todos.filter((object) => object._id === item_id)[0];
     setEditFormData(currentTodo);
   };
@@ -51,9 +56,14 @@ const Todo = () => {
     }
   };
 
+  const handleEditClose = () => {
+    setEditOpen(false);
+    setEditFormData({});
+  };
+
   const handleClose = () => {
     setOpen(false);
-    setEditFormData({});
+    setFormData({});
   };
 
   const handleChange = ({ target }) => {
@@ -100,6 +110,7 @@ const Todo = () => {
           description: "This is a test description.",
         });
         setError();
+        handleClose();
       } else {
         setError(data.error);
       }
@@ -125,7 +136,7 @@ const Todo = () => {
       if (response.ok) {
         dispatch({ type: "UPDATE_TODO", payload: data });
         setEditError();
-        handleClose();
+        handleEditClose();
       } else {
         setEditError(data.error);
       }
@@ -148,79 +159,19 @@ const Todo = () => {
         }
       />
       <div className={classes.content}>
-        <div className={classes.content_box}>
-          <div className={classes.content_box__title}>
-            <div>Add Todo Item</div>
-            <button
-              type="submit"
-              onClick={handleSubmit}
-              className={`${classes.todoForm__submit} ${classes.button}`}
-            >
-              <AddIcon /> Submit
-            </button>
-          </div>
-          <div className={classes.content_box__text}>
-            <form className={classes.todoForm}>
-              <div
-                className={`${classes.todoForm__formGroup} ${classes.todoForm__title}`}
-              >
-                <label htmlFor="title">Title</label>
-                <input
-                  type="text"
-                  placeholder="Title"
-                  name="title"
-                  id="title"
-                  onChange={handleChange}
-                  value={formData.title || ""}
-                ></input>
-              </div>
-              <div className={classes.todoForm__description}>
-                <label htmlFor="description">Description</label>
-                <textarea
-                  placeholder="Description"
-                  name="description"
-                  id="description"
-                  onChange={handleChange}
-                  value={formData.description || ""}
-                ></textarea>
-              </div>
-              <div
-                className={`${classes.todoForm__formGroup} ${classes.todoForm__dueDate}`}
-              >
-                <label htmlFor="dueDate">Due date: </label>
-                <input
-                  type="date"
-                  name="dueDate"
-                  id="dueDate"
-                  onChange={handleChange}
-                  value={moment(formData.dueDate).format("YYYY-MM-DD") || ""}
-                ></input>
-              </div>
-              <div
-                className={`${classes.todoForm__formGroup} ${classes.todoForm__priority}`}
-              >
-                <label htmlFor="priority">Priority: </label>
-                <select
-                  value={formData.priority || "medium"}
-                  name="priority"
-                  id="priority"
-                  onChange={handleChange}
-                >
-                  <option value="low">Low</option>
-                  <option value="medium">Medium</option>
-                  <option value="high">High</option>
-                </select>
-              </div>
-            </form>
-            {error && <Alert severity="error">{error}</Alert>}
-          </div>
-        </div>
+        <button
+          type="submit"
+          onClick={handleOpen}
+          className={`${classes.addNewButton} ${classes.button}`}
+        >
+          <AddIcon /> Add Todo Item
+        </button>
         {todos &&
           todos.map((item) => (
             <TodoItem
               key={item._id}
               data={item}
-              handleOpen={handleOpen}
+              handleOpen={handleEditOpen}
               handleDelete={handleDelete}
             />
           ))}
@@ -228,6 +179,82 @@ const Todo = () => {
       <Modal
         open={open || false}
         onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <div className={classes.modal}>
+          <div className={classes.content_box}>
+            <div className={classes.content_box__title}>
+              <div>Add Todo Item</div>
+              <button
+                type="submit"
+                onClick={handleSubmit}
+                className={`${classes.todoForm__submit} ${classes.button}`}
+              >
+                <AddIcon /> Submit
+              </button>
+            </div>
+            <div className={classes.content_box__text}>
+              <form className={classes.todoForm}>
+                <div
+                  className={`${classes.todoForm__formGroup} ${classes.todoForm__title}`}
+                >
+                  <label htmlFor="title">Title</label>
+                  <input
+                    type="text"
+                    placeholder="Title"
+                    name="title"
+                    id="title"
+                    onChange={handleChange}
+                    value={formData.title || ""}
+                  ></input>
+                </div>
+                <div className={classes.todoForm__description}>
+                  <label htmlFor="description">Description</label>
+                  <textarea
+                    placeholder="Description"
+                    name="description"
+                    id="description"
+                    onChange={handleChange}
+                    value={formData.description || ""}
+                  ></textarea>
+                </div>
+                <div
+                  className={`${classes.todoForm__formGroup} ${classes.todoForm__dueDate}`}
+                >
+                  <label htmlFor="dueDate">Due date: </label>
+                  <input
+                    type="date"
+                    name="dueDate"
+                    id="dueDate"
+                    onChange={handleChange}
+                    value={moment(formData.dueDate).format("YYYY-MM-DD") || ""}
+                  ></input>
+                </div>
+                <div
+                  className={`${classes.todoForm__formGroup} ${classes.todoForm__priority}`}
+                >
+                  <label htmlFor="priority">Priority: </label>
+                  <select
+                    value={formData.priority || "medium"}
+                    name="priority"
+                    id="priority"
+                    onChange={handleChange}
+                  >
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                  </select>
+                </div>
+              </form>
+              {error && <Alert severity="error">{error}</Alert>}
+            </div>
+          </div>
+        </div>
+      </Modal>
+      <Modal
+        open={editOpen || false}
+        onClose={handleEditClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >

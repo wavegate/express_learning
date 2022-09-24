@@ -75,6 +75,7 @@ const LoginForm = () => {
                 onChange={handleChange}
                 value={formData.email}
                 className={classes.formInput}
+                autoComplete="email"
               />
             </div>
             <div className={classes.formGroup}>
