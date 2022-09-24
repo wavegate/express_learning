@@ -172,12 +172,11 @@ input {
   top: 65px;
   width: calc(100vw - (100vw - 100%) - 280px);
   min-height: calc(100vh - 65px);
-  background: #eceff1;
+  // background: #eceff1;
   z-index: 1;
   display: flex;
   flex-direction: column;
   height: 1px;
-  height: auto;
 }
 
 input,

@@ -144,7 +144,7 @@ const Todo = () => {
   };
 
   return (
-    <div className="Todo">
+    <div className={classes.Todo}>
       <Helmet>
         <title>Todo</title>
       </Helmet>
