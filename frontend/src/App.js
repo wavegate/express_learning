@@ -245,7 +245,7 @@ const App = () => {
             ></Route>
             <Route
               path="/login"
-              element={!user ? <LoginForm /> : <Navigate to="/dashboard" />}
+              element={!user ? <LoginForm /> : <Navigate to="/todo" />}
             ></Route>
           </Routes>
           <Outlet />

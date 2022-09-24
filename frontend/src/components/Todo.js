@@ -8,6 +8,7 @@ import { Helmet } from "react-helmet-async";
 import Modal from "@mui/material/Modal";
 import Alert from "@mui/material/Alert";
 import moment from "moment";
+import TodoItem from "./TodoItem.js";
 // import Select from "react-select";
 
 const Todo = () => {
@@ -15,9 +16,7 @@ const Todo = () => {
   const { todos, dispatch } = useAppContext();
   const [formData, setFormData] = useState({
     title: "test",
-    description: "test",
-    dueDate: new Date(),
-    priority: "medium",
+    description: "testdescription",
   });
   const [error, setError] = useState();
   const [editError, setEditError] = useState();
@@ -28,11 +27,6 @@ const Todo = () => {
     const currentTodo = todos.filter((object) => object._id === item_id)[0];
     setEditFormData(currentTodo);
   };
-  const options = [
-    { value: "low", label: "low" },
-    { value: "medium", label: "medium" },
-    { value: "high", label: "high" },
-  ];
 
   const handleDelete = (item_id) => {
     const postDelete = async () => {
@@ -100,7 +94,7 @@ const Todo = () => {
       const data = await response.json();
       if (response.ok) {
         dispatch({ type: "CREATE_TODO", payload: data });
-        setFormData({});
+        setFormData({ title: "test", description: "testdescription" });
         setError();
       } else {
         setError(data.error);
@@ -149,62 +143,56 @@ const Todo = () => {
           <PlaylistAddCheckIcon fontSize="large" className={classes.icon} />
         }
       />
-      <div className="newTaskForm">
-        <form onSubmit={handleSubmit}>
-          <label>Title</label>
-          <input
-            type="text"
-            placeholder="Title"
-            name="title"
-            onChange={handleChange}
-            value={formData.title || ""}
-          ></input>
-          <label>Description</label>
-          <input
-            type="text"
-            placeholder="Description"
-            name="description"
-            onChange={handleChange}
-            value={formData.description || ""}
-          ></input>
-          <label>Due</label>
-          <input
-            type="date"
-            name="dueDate"
-            onChange={handleChange}
-            value={moment(formData.dueDate).format("YYYY-MM-DD") || ""}
-          ></input>
-          <label>Priority</label>
-          <select
-            value={formData.priority || ""}
-            name="priority"
-            onChange={handleChange}
-          >
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
-          </select>
-          <button type="submit">Add Todo</button>
-        </form>
-        {error && <Alert severity="error">{error}</Alert>}
+      <div className={classes.content}>
+        <div className="newTaskForm">
+          <form onSubmit={handleSubmit}>
+            <label>Title</label>
+            <input
+              type="text"
+              placeholder="Title"
+              name="title"
+              onChange={handleChange}
+              value={formData.title || ""}
+            ></input>
+            <label>Description</label>
+            <input
+              type="text"
+              placeholder="Description"
+              name="description"
+              onChange={handleChange}
+              value={formData.description || ""}
+            ></input>
+            <label>Due</label>
+            <input
+              type="date"
+              name="dueDate"
+              onChange={handleChange}
+              value={moment(formData.dueDate).format("YYYY-MM-DD") || ""}
+            ></input>
+            <label>Priority</label>
+            <select
+              value={formData.priority || "medium"}
+              name="priority"
+              onChange={handleChange}
+            >
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+            <button type="submit">Add Todo</button>
+          </form>
+          {error && <Alert severity="error">{error}</Alert>}
+        </div>
+        {todos &&
+          todos.map((item) => (
+            <TodoItem
+              key={item._id}
+              data={item}
+              handleOpen={handleOpen}
+              handleDelete={handleDelete}
+            />
+          ))}
       </div>
-      {todos &&
-        todos.map((item) => (
-          <li key={item._id}>
-            <div className="task">
-              <input name="task" type="checkbox" />
-              <label htmlFor="task">Complete</label>
-              <h3>{item.title}</h3>
-              <p>{item.description}</p>
-              <p>Due date: {moment(item.dueDate).format("YYYY-MM-DD")}</p>
-              <div className="priority">Priority: {item.priority}</div>
-              <button onClick={() => handleOpen(item._id)}>Edit button</button>
-              <button onClick={() => handleDelete(item._id)}>
-                Delete button
-              </button>
-            </div>
-          </li>
-        ))}
       <Modal
         open={open || false}
         onClose={handleClose}

@@ -22,7 +22,6 @@ todoRouter.post("/create", async (req, res, next) => {
   if (!title) {
     return res.status(400).json({ error: "Please add a title." });
   }
-  console.log(dueDate);
 
   try {
     const user_id = req.user._id;
@@ -33,7 +32,6 @@ todoRouter.post("/create", async (req, res, next) => {
       priority: priority,
       user_id: user_id,
     });
-    console.log(todo.dueDate);
     res.status(200).json(todo);
   } catch (error) {
     res.status(400).json({ error: error.message });
