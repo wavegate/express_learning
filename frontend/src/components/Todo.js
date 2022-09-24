@@ -15,13 +15,10 @@ import AddIcon from "@mui/icons-material/Add";
 const Todo = () => {
   const { user } = useAuthContext();
   const { todos, dispatch } = useAppContext();
-  const [formData, setFormData] = useState({
-    title: "test",
-    description: "This is a test description.",
-  });
+  const [formData, setFormData] = useState({});
   const [error, setError] = useState();
   const [editError, setEditError] = useState();
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState();
   const [editOpen, setEditOpen] = useState();
   const [editFormData, setEditFormData] = useState({});
   const handleOpen = () => {
