@@ -12,35 +12,34 @@ mongoose.connect(process.env.MONGODB_URI, {
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-import Object from "./models/objectModel.js";
+// import Object from "./models/objectModel.js";
 
-await Object.deleteMany({});
+// await Object.deleteMany({});
 
-import { LoremIpsum } from "lorem-ipsum";
+// // import { LoremIpsum } from "lorem-ipsum";
 
-const lorem = new LoremIpsum({
-  sentencesPerParagraph: {
-    max: 8,
-    min: 4,
-  },
-  wordsPerSentence: {
-    max: 16,
-    min: 4,
-  },
-});
+// // const lorem = new LoremIpsum({
+// //   sentencesPerParagraph: {
+// //     max: 8,
+// //     min: 4,
+// //   },
+// //   wordsPerSentence: {
+// //     max: 16,
+// //     min: 4,
+// //   },
+// // });
 
-for (let i = 0; i < 5; i++) {
-  const newObject = new Object({
-    name: `Object ${i}`,
-    description: lorem.generateSentences(20),
-  });
-  await newObject.save();
-}
+// // for (let i = 0; i < 5; i++) {
+// //   const newObject = new Object({
+// //     name: `Object ${i}`,
+// //     description: lorem.generateSentences(20),
+// //   });
+// //   await newObject.save();
+// // }
 
-import User from "./models/userModel.js";
-
-await User.deleteMany({});
-User.register("test@test.com", "ZlxE!9G!ZL40");
+// import User from "./models/userModel.js";
+// await User.deleteMany({});
+// User.register("test@test.com", "ZlxE!9G!ZL40");
 
 import objectRouter from "./routes/objectRouter.js";
 app.use("/objects", objectRouter);

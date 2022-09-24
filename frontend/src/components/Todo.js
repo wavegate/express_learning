@@ -2,13 +2,13 @@ import classes from "../scss_modules/Todo.module.scss";
 import Header from "./Header.js";
 import PlaylistAddCheckIcon from "@mui/icons-material/PlaylistAddCheck";
 import useAppContext from "../hooks/useAppContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useAuthContext from "../hooks/useAuthContext";
 import { Helmet } from "react-helmet-async";
 
 const Todo = () => {
   const { user } = useAuthContext();
-  const { dispatch } = useAppContext();
+  const { todos, dispatch } = useAppContext();
   const [formData, setFormData] = useState({
     title: "test",
     description: "test",
@@ -17,8 +17,24 @@ const Todo = () => {
 
   const handleChange = ({ target }) => {
     setFormData({ ...formData, [target.name]: target.value });
-    console.log(formData);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch("/todos", {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+      const data = await response.json();
+      if (response.ok) {
+        dispatch({ type: "SET_TODOS", payload: data });
+      }
+    };
+    if (user) {
+      fetchData();
+    }
+  }, [user, dispatch]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -71,7 +87,7 @@ const Todo = () => {
             placeholder="Description"
             name="description"
             onChange={handleChange}
-            value={formData.title}
+            value={formData.description}
           ></input>
           <label>Due</label>
           <input
@@ -91,20 +107,21 @@ const Todo = () => {
           <button type="submit">Add Todo</button>
         </form>
       </div>
-      <div className="task">
-        <input name="task" type="checkbox" />
-        <label htmlFor="task">Complete</label>
-        <h3>Write for Sarah</h3>
-        <p>
-          Eldest father can design tastes did joy settle. Roused future he ye an
-          marked. Arose mrrapid in so vexed words. Gay welcome led add lasting
-          chiefly say looking.
-        </p>
-        <p>Due date: 10/10/2020</p>
-        <div className="priority">Priority</div>
-        <button>Edit button</button>
-        <button>Delete button</button>
-      </div>
+      {todos &&
+        todos.map((item) => (
+          <li key={item._id}>
+            <div className="task">
+              <input name="task" type="checkbox" />
+              <label htmlFor="task">Complete</label>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+              <p>Due date: {item.dueDate}</p>
+              <div className="priority">Priority: {item.priority}</div>
+              <button>Edit button</button>
+              <button>Delete button</button>
+            </div>
+          </li>
+        ))}
     </div>
   );
 };

@@ -5,12 +5,16 @@ const todoRouter = express.Router();
 
 todoRouter.use(requireAuth);
 
-todoRouter.get("/", (req, res, next) => {
-  Todo.find({})
-    .sort({ createdAt: "desc" })
-    .exec((err, results) => {
-      res.json(results);
+todoRouter.get("/", async (req, res, next) => {
+  try {
+    const user_id = req.user._id;
+    const todos = await Todo.find({ user_id: user_id }).sort({
+      createdAt: "desc",
     });
+    return res.status(200).json(todos);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 });
 
 todoRouter.get("/create", (req, res, next) => {
