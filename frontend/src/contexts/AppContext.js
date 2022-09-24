@@ -24,6 +24,24 @@ export const appReducer = (state, action) => {
           (object) => object._id !== action.payload._id
         ),
       };
+    case "SET_TODOS":
+      return {
+        todos: action.payload,
+      };
+    case "CREATE_TODO":
+      if (state.todos) {
+        return {
+          todos: [action.payload, ...state.todos],
+        };
+      } else {
+        return {
+          todos: [action.payload],
+        };
+      }
+    case "DELETE_TODO":
+      return {
+        todos: state.todos.filter((todo) => todo._id !== action.payload._id),
+      };
     default:
       return state;
   }
@@ -32,6 +50,7 @@ export const appReducer = (state, action) => {
 export const AppContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(appReducer, {
     objects: null,
+    todos: null,
   });
   return (
     <AppContext.Provider value={{ ...state, dispatch }}>

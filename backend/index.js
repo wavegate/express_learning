@@ -46,6 +46,8 @@ import objectRouter from "./routes/objectRouter.js";
 app.use("/objects", objectRouter);
 import userRouter from "./routes/userRouter.js";
 app.use("/users", userRouter);
+import todoRouter from "./routes/todoRouter.js";
+app.use("/todos", todoRouter);
 
 const port = 8000;
 app.listen(port, () => {

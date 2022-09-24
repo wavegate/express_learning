@@ -214,6 +214,10 @@ const App = () => {
               }
             ></Route>
             <Route
+              path="/dashboard"
+              element={user ? <Syllabus /> : <Navigate to="/login" />}
+            ></Route>
+            <Route
               path="/live_class"
               element={user ? <Syllabus /> : <Navigate to="/login" />}
             ></Route>
