@@ -86,6 +86,7 @@ const LoginForm = () => {
                 onChange={handleChange}
                 value={formData.password}
                 className={classes.formInput}
+                autoComplete="current-password"
               />
             </div>
             <button

@@ -86,9 +86,11 @@ const App = () => {
             </div>
           )}
 
-          <Link to="/login">
-            <button>Login</button>
-          </Link>
+          {!user && (
+            <Link to="/login">
+              <button>Login</button>
+            </Link>
+          )}
           {user && <button onClick={handleLogout}>Logout</button>}
           <div className="language_selector">
             <img

@@ -26,3 +26,13 @@
 .content_box__text {
   padding: 16px;
 }
+
+.modal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background: white;
+  width: 600px;
+  height: auto;
+  transform: translate(-50%, -50%);
+}

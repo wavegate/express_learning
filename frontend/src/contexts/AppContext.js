@@ -4,6 +4,11 @@ export const AppContext = createContext();
 
 export const appReducer = (state, action) => {
   switch (action.type) {
+    case "CLEAR":
+      return {
+        objects: null,
+        todos: null,
+      };
     case "SET_OBJECTS":
       return {
         objects: action.payload,
@@ -41,6 +46,14 @@ export const appReducer = (state, action) => {
     case "DELETE_TODO":
       return {
         todos: state.todos.filter((todo) => todo._id !== action.payload._id),
+      };
+    case "UPDATE_TODO":
+      const todo = state.todos.filter(
+        (todo) => todo._id === action.payload._id
+      )[0];
+      Object.assign(todo, action.payload);
+      return {
+        todos: state.todos,
       };
     default:
       return state;

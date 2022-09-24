@@ -17,15 +17,12 @@ todoRouter.get("/", async (req, res, next) => {
   }
 });
 
-todoRouter.get("/create", (req, res, next) => {
-  res.render("create_user");
-});
-
 todoRouter.post("/create", async (req, res, next) => {
   const { title, description, dueDate, priority } = req.body;
   if (!title) {
     return res.status(400).json({ error: "Please add a title." });
   }
+  console.log(dueDate);
 
   try {
     const user_id = req.user._id;
@@ -36,26 +33,44 @@ todoRouter.post("/create", async (req, res, next) => {
       priority: priority,
       user_id: user_id,
     });
+    console.log(todo.dueDate);
     res.status(200).json(todo);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 });
 
-todoRouter.get("/:id", (req, res, next) => {
-  Object.find({ _id: req.params.id }, (err, results) => {
-    res.json(results[0]);
-  });
+todoRouter.post("/update", async (req, res, next) => {
+  const { title, description, dueDate, priority, _id } = req.body;
+  if (!title) {
+    return res.status(400).json({ error: "Please add a title." });
+  }
+
+  try {
+    const todo = await Todo.findByIdAndUpdate(
+      { _id: _id },
+      {
+        title: title,
+        description: description,
+        dueDate: dueDate,
+        priority: priority,
+      },
+      { new: true }
+    );
+    res.status(200).json(todo);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 });
 
-todoRouter.delete("/:id", (req, res, next) => {
-  const deleteObject = async () => {
-    const deletedObject = await Object.findOneAndDelete({ _id: req.params.id });
-    if (deletedObject) {
-      res.status(200).json(deletedObject);
-    }
-  };
-  deleteObject();
+todoRouter.delete("/delete", async (req, res, next) => {
+  const { item_id } = req.body;
+  try {
+    const deletedTodo = await Todo.findOneAndDelete({ _id: item_id });
+    res.status(200).json(deletedTodo);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 });
 
 export default todoRouter;
