@@ -9,6 +9,7 @@ import Modal from "@mui/material/Modal";
 import Alert from "@mui/material/Alert";
 import moment from "moment";
 import TodoItem from "./TodoItem.js";
+import AddIcon from "@mui/icons-material/Add";
 // import Select from "react-select";
 
 const Todo = () => {
@@ -16,7 +17,7 @@ const Todo = () => {
   const { todos, dispatch } = useAppContext();
   const [formData, setFormData] = useState({
     title: "test",
-    description: "testdescription",
+    description: "This is a test description.",
   });
   const [error, setError] = useState();
   const [editError, setEditError] = useState();
@@ -94,7 +95,10 @@ const Todo = () => {
       const data = await response.json();
       if (response.ok) {
         dispatch({ type: "CREATE_TODO", payload: data });
-        setFormData({ title: "test", description: "testdescription" });
+        setFormData({
+          title: "test",
+          description: "This is a test description.",
+        });
         setError();
       } else {
         setError(data.error);
@@ -144,44 +148,72 @@ const Todo = () => {
         }
       />
       <div className={classes.content}>
-        <div className="newTaskForm">
-          <form onSubmit={handleSubmit}>
-            <label>Title</label>
-            <input
-              type="text"
-              placeholder="Title"
-              name="title"
-              onChange={handleChange}
-              value={formData.title || ""}
-            ></input>
-            <label>Description</label>
-            <input
-              type="text"
-              placeholder="Description"
-              name="description"
-              onChange={handleChange}
-              value={formData.description || ""}
-            ></input>
-            <label>Due</label>
-            <input
-              type="date"
-              name="dueDate"
-              onChange={handleChange}
-              value={moment(formData.dueDate).format("YYYY-MM-DD") || ""}
-            ></input>
-            <label>Priority</label>
-            <select
-              value={formData.priority || "medium"}
-              name="priority"
-              onChange={handleChange}
+        <div className={classes.content_box}>
+          <div className={classes.content_box__title}>
+            <div>Add Todo Item</div>
+            <button
+              type="submit"
+              onClick={handleSubmit}
+              className={`${classes.todoForm__submit} ${classes.button}`}
             >
-              <option value="low">Low</option>
-              <option value="medium">Medium</option>
-              <option value="high">High</option>
-            </select>
-            <button type="submit">Add Todo</button>
-          </form>
-          {error && <Alert severity="error">{error}</Alert>}
+              <AddIcon /> Submit
+            </button>
+          </div>
+          <div className={classes.content_box__text}>
+            <form className={classes.todoForm}>
+              <div
+                className={`${classes.todoForm__formGroup} ${classes.todoForm__title}`}
+              >
+                <label htmlFor="title">Title</label>
+                <input
+                  type="text"
+                  placeholder="Title"
+                  name="title"
+                  id="title"
+                  onChange={handleChange}
+                  value={formData.title || ""}
+                ></input>
+              </div>
+              <div className={classes.todoForm__description}>
+                <label htmlFor="description">Description</label>
+                <textarea
+                  placeholder="Description"
+                  name="description"
+                  id="description"
+                  onChange={handleChange}
+                  value={formData.description || ""}
+                ></textarea>
+              </div>
+              <div
+                className={`${classes.todoForm__formGroup} ${classes.todoForm__dueDate}`}
+              >
+                <label htmlFor="dueDate">Due date: </label>
+                <input
+                  type="date"
+                  name="dueDate"
+                  id="dueDate"
+                  onChange={handleChange}
+                  value={moment(formData.dueDate).format("YYYY-MM-DD") || ""}
+                ></input>
+              </div>
+              <div
+                className={`${classes.todoForm__formGroup} ${classes.todoForm__priority}`}
+              >
+                <label htmlFor="priority">Priority: </label>
+                <select
+                  value={formData.priority || "medium"}
+                  name="priority"
+                  id="priority"
+                  onChange={handleChange}
+                >
+                  <option value="low">Low</option>
+                  <option value="medium">Medium</option>
+                  <option value="high">High</option>
+                </select>
+              </div>
+            </form>
+            {error && <Alert severity="error">{error}</Alert>}
+          </div>
         </div>
         {todos &&
           todos.map((item) => (
@@ -200,39 +232,75 @@ const Todo = () => {
         aria-describedby="modal-modal-description"
       >
         <div className={classes.modal}>
-          <form onSubmit={handleEditSubmit} className={classes.editTaskForm}>
-            <label>Title</label>
-            <input
-              type="text"
-              placeholder="Title"
-              name="title"
-              onChange={handleEditChange}
-              value={editFormData.title || ""}
-            ></input>
-            <label>Description</label>
-            <input
-              type="text"
-              placeholder="Description"
-              name="description"
-              onChange={handleEditChange}
-              value={editFormData.description || ""}
-            ></input>
-            <label>Due</label>
-            <input
-              type="date"
-              name="dueDate"
-              onChange={handleEditChange}
-              value={moment(editFormData.dueDate).format("YYYY-MM-DD") || ""}
-            ></input>
-            <label>Priority</label>
-            <select name="priority" defaultValue={editFormData.priority || ""}>
-              <option value="low">Low</option>
-              <option value="medium">Medium</option>
-              <option value="high">High</option>
-            </select>
-            <button type="submit">Edit Todo</button>
-          </form>
-          {editError && <Alert severity="error">{editError}</Alert>}
+          <div className={classes.content_box}>
+            <div className={classes.content_box__title}>
+              <div>Edit Todo Item</div>
+              <button
+                type="submit"
+                onClick={handleEditSubmit}
+                className={`${classes.todoForm__submit} ${classes.button}`}
+              >
+                <AddIcon /> Submit
+              </button>
+            </div>
+            <div className={classes.content_box__text}>
+              <form className={classes.todoForm}>
+                <div
+                  className={`${classes.todoForm__formGroup} ${classes.todoForm__title}`}
+                >
+                  <label htmlFor="editTitle">Title</label>
+                  <input
+                    type="text"
+                    placeholder="Title"
+                    name="title"
+                    id="editTitle"
+                    onChange={handleEditChange}
+                    value={editFormData.title || ""}
+                  ></input>
+                </div>
+                <div className={classes.todoForm__description}>
+                  <label htmlFor="editDescription">Description</label>
+                  <textarea
+                    placeholder="Description"
+                    name="description"
+                    id="editDescription"
+                    onChange={handleEditChange}
+                    value={editFormData.description || ""}
+                  ></textarea>
+                </div>
+                <div
+                  className={`${classes.todoForm__formGroup} ${classes.todoForm__dueDate}`}
+                >
+                  <label htmlFor="editDueDate">Due date: </label>
+                  <input
+                    type="date"
+                    name="dueDate"
+                    id="editDueDate"
+                    onChange={handleEditChange}
+                    value={
+                      moment(editFormData.dueDate).format("YYYY-MM-DD") || ""
+                    }
+                  ></input>
+                </div>
+                <div
+                  className={`${classes.todoForm__formGroup} ${classes.todoForm__priority}`}
+                >
+                  <label htmlFor="editPriority">Priority: </label>
+                  <select
+                    value={editFormData.priority || "medium"}
+                    name="priority"
+                    id="editPriority"
+                    onChange={handleEditChange}
+                  >
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                  </select>
+                </div>
+              </form>
+              {editError && <Alert severity="error">{editError}</Alert>}
+            </div>
+          </div>
         </div>
       </Modal>
     </div>

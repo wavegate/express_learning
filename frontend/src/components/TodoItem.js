@@ -43,7 +43,10 @@ const TodoItem = (props) => {
       </div>
       <div className={classes.priority}>
         Priority:
-        <CircleIcon fontSize="small" style={{ color: color }} />
+        <CircleIcon
+          fontSize="small"
+          style={{ color: color, marginTop: "1px" }}
+        />
       </div>
       <div className={classes.buttons}>
         <button

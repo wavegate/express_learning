@@ -21,6 +21,9 @@
   font-size: 22px;
   border-bottom: 2px solid rgb(245, 245, 245);
   padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .content_box__text {
@@ -35,4 +38,81 @@
   width: 600px;
   height: auto;
   transform: translate(-50%, -50%);
+}
+
+.todoForm {
+  display: grid;
+  grid-template-rows: auto auto;
+  grid-template-columns: auto auto auto;
+  grid-gap: 20px 24px;
+}
+
+.todoForm__title {
+  grid-area: 1 / 1 / 2 / 2;
+
+  input {
+    width: 100%;
+  }
+}
+
+.todoForm__description {
+  grid-area: 2 / 1 / 3 / 4;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  textarea {
+    width: 100%;
+    height: 120px;
+    resize: vertical;
+  }
+}
+
+.todoForm__dueDate {
+  grid-area: 1 / 2 / 2 / 3;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.todoForm__priority {
+  grid-area: 1 / 3 / 2 / 4;
+  display: flex;
+  gap: 6px;
+  justify-content: flex-end;
+}
+
+.todoForm__submit {
+  grid-area: 2 / 2 / 3 / 4;
+}
+
+.buttons {
+  grid-area: 2 / 3 / 3 / 5;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.todoForm__formGroup {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  input {
+    padding: 0px 8px;
+  }
+}
+
+.button {
+  all: unset;
+  &:hover {
+    cursor: pointer;
+    color: #59a7ff;
+  }
+  transition: color 0.5s;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  padding: 6px 12px;
 }
