@@ -232,7 +232,7 @@ const App = () => {
               element={user ? <Lectures /> : <Navigate to="/login" />}
             ></Route>
             <Route
-              path="/profile"
+              path="/profile/*"
               element={user ? <Profile /> : <Navigate to="/login" />}
             ></Route>
             <Route
@@ -245,7 +245,7 @@ const App = () => {
             ></Route>
             <Route
               path="/login"
-              element={!user ? <LoginForm /> : <Navigate to="/todo" />}
+              element={!user ? <LoginForm /> : <Navigate to="/profile" />}
             ></Route>
           </Routes>
           <Outlet />

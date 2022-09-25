@@ -41,9 +41,14 @@
 .content {
   display: grid;
   grid-template-columns: 1fr 1.5fr;
-  grid-template-rows: auto auto auto;
   gap: 18px;
   padding: 18px;
+}
+
+.leftRow {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .content_box {
@@ -65,7 +70,6 @@
 }
 
 .cover {
-  grid-area: 1 / 1 / 2 / 4;
   overflow: hidden;
 }
 
@@ -91,16 +95,13 @@
 }
 
 .follow_box {
-  grid-area: 2 / 1 / 3 / 2;
 }
 
 .highlights {
-  grid-area: 3 / 1 / 4 / 2;
   padding: 12px;
 }
 
 .posts_box {
-  grid-area: 2 / 2 / 4 / 3;
 }
 
 .title {
@@ -117,4 +118,29 @@
   color: #545cd8;
   font-weight: 600;
   font-size: 22px;
+}
+
+.tabs {
+  display: flex;
+  height: 80px;
+  padding: 0px 16px;
+  gap: 24px;
+  align-items: flex-end;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.tabLabel {
+  height: 60px;
+  display: flex;
+  padding: 0 20px 8px 20px;
+  align-items: flex-end;
+  justify-content: center;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.tabContent {
+  padding: 16px;
 }
