@@ -1,6 +1,7 @@
 import classes from "../scss_modules/Syllabus.module.scss";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import Header from "./Header.js";
+import ContentCard from "./ContentCard.js";
 
 const Syllabus = () => {
   return (
@@ -10,6 +11,9 @@ const Syllabus = () => {
         detail="This page provides information about the Argos CS101 class on Web Development relevant only to the Fall 2022 semester."
         icon={<MenuBookIcon fontSize="large" className={classes.icon} />}
       />
+      <ContentCard title="Curriculum">
+        <div>Hi</div>
+      </ContentCard>
       <div className={classes.content}>
         <div className={classes.content_box}>
           <div className={classes.content_box__title}>Curriculum</div>

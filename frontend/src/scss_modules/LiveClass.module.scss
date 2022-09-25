@@ -1,0 +1,64 @@
+.LiveClass {
+  background: #eceff1;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: auto 250px;
+  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.content_box {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  border-left: 2px solid rgb(245, 245, 245);
+}
+
+.content_box__title {
+  font-size: 22px;
+  border-bottom: 2px solid rgb(245, 245, 245);
+  padding: 16px;
+}
+
+.content_box__text {
+  padding: 16px;
+}
+
+.video_responsive {
+  overflow: hidden;
+  padding-bottom: 56.25%;
+  position: relative;
+  height: 0;
+}
+
+.video_responsive iframe {
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+.lecture_item {
+  display: flex;
+  align-items: center;
+  &:hover {
+    cursor: pointer;
+  }
+  padding: 6px 6px;
+  border-radius: 6px;
+}
+
+.lecture_item__text {
+  flex: 1;
+}
+
+.playIcon,
+.checkIcon {
+  color: #5ed597;
+}
+
+.playIcon {
+  margin-right: 8px;
+}

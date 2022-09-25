@@ -1,4 +1,84 @@
-.links {
+.Navbar {
   display: flex;
-  gap: 24px;
+  height: 65px;
+  position: fixed;
+  top: 0;
+  background: white;
+  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  align-items: center;
+  z-index: 30;
+}
+
+.menuButton {
+  margin-left: 24px;
+  margin-right: 24px;
+}
+
+.logoSpace {
+  flex: 1;
+}
+
+.logo {
+  height: 60px;
+}
+
+.avatar {
+  height: 55px;
+  width: 55px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.searchbar {
+  position: relative;
+  width: 200px;
+  display: flex;
+  align-items: center;
+  margin-right: 24px;
+}
+
+.searchbar__input {
+  width: 100%;
+  padding-left: 36px;
+  padding-right: 15px;
+  height: 30px;
+  border: none;
+  outline: 1px solid rgb(190, 190, 190);
+  border-radius: 15px;
+}
+
+.searchbar__icon {
+  position: absolute;
+  left: 8px;
+}
+
+.identity {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-right: 24px;
+}
+
+.identity__text {
+  display: flex;
+  flex-direction: column;
+}
+
+.identity__name {
+  font-weight: 600;
+}
+
+.identity__role {
+  font-weight: 300;
+}
+
+.language_selector {
+  display: flex;
+  align-items: center;
+  margin-right: 24px;
+}
+
+.language_selector__flag {
+  margin-right: 6px;
 }
