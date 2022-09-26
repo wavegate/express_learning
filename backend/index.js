@@ -49,6 +49,42 @@ import todoRouter from "./routes/todoRouter.js";
 app.use("/todos", todoRouter);
 
 const port = 8000;
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Server listening on http://localhost:${port}/`);
+});
+
+import { Server } from "socket.io";
+const io = new Server(server, {
+  pingTimeout: 60000,
+  cors: {
+    origin: "http://localhost:3000",
+  },
+});
+
+import jwt_decode from "jwt-decode";
+
+io.on("connection", (socket) => {
+  socket.on("setup", (userToken) => {
+    const user = jwt_decode(userToken);
+    socket.join(user._id);
+    console.log(`${user._id} connected`);
+    socket.emit(`${user._id} connected`);
+  });
+  socket.on("join chat", (room) => {
+    socket.join(room);
+    console.log("User joined room: " + room);
+  });
+  socket.on("new message", (newMessageReceived) => {
+    // const chat = newMessageReceived.chat;
+    // if (!chat.users) return console.log("chat.users not defined");
+    // chat.users.forEach((user) => {
+    //   if (user._id == newMessageReceived.sender._id) {
+    //     return;
+    //   } else {
+    //     socket.in(user._id).emit("message received", newMessageReceived);
+    //   }
+    // });
+    socket.emit("message received", newMessageReceived);
+    // socket.in("live_class").emit("message received", newMessageReceived);
+  });
 });

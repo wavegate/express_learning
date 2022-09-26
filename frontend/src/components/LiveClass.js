@@ -16,8 +16,35 @@ import MicIcon from "@mui/icons-material/Mic";
 import VideocamIcon from "@mui/icons-material/Videocam";
 import Button from "./Button.js";
 import CircleIcon from "@mui/icons-material/Circle";
+import { useEffect, useState } from "react";
+import io from "socket.io-client";
+import useAuthContext from "../hooks/useAuthContext.js";
+
+const ENDPOINT = "http://localhost:8000";
+var socket, selectedChatCompare;
 
 const LiveClass = () => {
+  const [messages, setMessages] = useState([]);
+  const { user } = useAuthContext();
+  const [socketConnected, setSocketConnected] = useState(false);
+
+  useEffect(() => {
+    socket = io(ENDPOINT);
+    socket.emit("join chat", "live_class");
+    socket.on("connection", () => setSocketConnected(true));
+  }, [user]);
+
+  useEffect(() => {
+    socket.on("message received", (newMessageReceived) => {
+      setMessages([...messages, newMessageReceived]);
+    });
+  });
+
+  const sendMessage = () => {
+    socket.emit("new message", "random message content");
+    console.log("message sent");
+  };
+
   return (
     <div className={classes.LiveClass}>
       <Header
@@ -101,6 +128,9 @@ const LiveClass = () => {
           </div>
         </Paper>
         <ContentCard className={classes.liveChat} title="Live Chat">
+          <Button onClick={sendMessage}>Send message</Button>
+          {messages &&
+            messages.map((item, index) => <div key={index}>{item}</div>)}
           <div>Samantha</div>
           <div>Lorem ipsum dol Samantha's chat</div>
           <div>12:45 PM</div>
