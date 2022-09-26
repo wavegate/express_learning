@@ -2,9 +2,6 @@ import classes from "../scss_modules/Syllabus.module.scss";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import Header from "./Header.js";
 import ContentCard from "./ContentCard.js";
-import Button from "./Button.js";
-import AlertModal from "./AlertModal.js";
-import { useState } from "react";
 
 const Syllabus = () => {
   return (

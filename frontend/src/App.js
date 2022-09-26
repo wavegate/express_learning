@@ -63,7 +63,7 @@ const App = () => {
             ></Route>
             <Route
               path="/login"
-              element={!user ? <Login /> : <Navigate to="/syllabus" />}
+              element={!user ? <Login /> : <Navigate to="/live_class" />}
             ></Route>
             {/* <Route
               path="/register"

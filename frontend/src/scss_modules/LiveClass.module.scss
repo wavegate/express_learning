@@ -1,64 +1,113 @@
+@use "colors";
+
 .LiveClass {
   background: #eceff1;
 }
 
 .content {
-  display: grid;
-  grid-template-columns: auto 250px;
-  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
-}
-
-.content_box {
-  background: white;
   display: flex;
-  flex-direction: column;
-  border-left: 2px solid rgb(245, 245, 245);
+  padding: 16px;
+  gap: 16px;
 }
 
-.content_box__title {
+.videoStream {
+  width: 70%;
+}
+
+.liveChat {
+  width: 30%;
+}
+
+.video {
+  width: 100%;
+  border-radius: 12px;
+}
+
+.title {
   font-size: 22px;
   border-bottom: 2px solid rgb(245, 245, 245);
-  padding: 16px;
-}
-
-.content_box__text {
-  padding: 16px;
-}
-
-.video_responsive {
-  overflow: hidden;
-  padding-bottom: 56.25%;
-  position: relative;
-  height: 0;
-}
-
-.video_responsive iframe {
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  position: absolute;
-}
-
-.lecture_item {
+  font-weight: 600;
+  padding: 12px;
   display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.subtitle {
+  font-size: 16px;
+  font-weight: 400;
+  display: flex;
+  flex-direction: row;
   align-items: center;
-  &:hover {
-    cursor: pointer;
-  }
-  padding: 6px 6px;
-  border-radius: 6px;
+  color: colors.$darkGray;
 }
 
-.lecture_item__text {
-  flex: 1;
+.subtitle__name {
+  border-right: 2px solid rgba(0, 0, 0, 0.2);
+  padding-right: 24px;
 }
 
-.playIcon,
-.checkIcon {
-  color: #5ed597;
+.subtitle__number {
+  padding-left: 24px;
+  align-items: center;
+  display: flex;
+  gap: 8px;
 }
 
-.playIcon {
-  margin-right: 8px;
+.videoStream__content {
+  display: flex;
+  padding: 12px;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.videoStream__footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.students {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.students__title {
+  font-weight: 600;
+}
+
+.students__list {
+  display: flex;
+  gap: 4px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.video__wrapper {
+  position: relative;
+}
+
+.video__live {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  padding: 12px 24px;
+  width: fit-content;
+  position: absolute;
+  left: 24px;
+  top: 24px;
 }
