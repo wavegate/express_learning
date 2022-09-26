@@ -10,6 +10,9 @@ import useRegister from "../hooks/useRegister.js";
 import classes from "../scss_modules/Login.module.scss";
 import studying from "../images/studying.svg";
 import logo from "../images/Argos.png";
+import Button from "./Button.js";
+import learningAnimation from "../data/learningAnimation.json";
+import { Player } from "@lottiefiles/react-lottie-player";
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
@@ -49,11 +52,11 @@ const LoginForm = () => {
       <div className={classes.loginContainer}>
         <div className={classes.leftSide}>
           <img src={logo} alt="Argos_logo" className={classes.logo}></img>
-          <img
-            src={studying}
-            alt="studying"
-            className={classes.studying_img}
-          ></img>
+          <Player
+            src="https://assets2.lottiefiles.com/private_files/lf30_sxw84pnl.json"
+            autoplay
+            loop
+          />
         </div>
         <div className={classes.rightSide}>
           <div className={classes.form_header}>Login to Argos</div>
@@ -90,27 +93,27 @@ const LoginForm = () => {
                 autoComplete="current-password"
               />
             </div>
-            <button
+            <Button
               type="submit"
               disabled={isLoading}
               className={classes.loginButton}
             >
               Login
-            </button>
-            <button
+            </Button>
+            <Button
               type="submit"
               disabled={isLoading}
               className={classes.loginButton}
             >
               Login as Guest Student
-            </button>
-            <button
+            </Button>
+            <Button
               type="submit"
               disabled={isLoading}
               className={classes.loginButton}
             >
               Login as Guest Teacher
-            </button>
+            </Button>
           </form>
           {error && <Alert severity="error">{error}</Alert>}
         </div>

@@ -3,45 +3,8 @@
 }
 
 .content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  padding: 24px;
-  gap: 24px;
-}
-
-.icon {
-  color: #fb818c;
-}
-
-.content_box {
-  background: white;
-  border-radius: 4px;
-  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-}
-
-.content_box__title {
-  font-size: 22px;
-  border-bottom: 2px solid rgb(245, 245, 245);
   padding: 16px;
-}
-
-.content_box__text {
-  padding: 16px;
-}
-
-.video_responsive {
-  overflow: hidden;
-  padding-bottom: 56.25%;
-  position: relative;
-  height: 0;
-}
-
-.video_responsive iframe {
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  position: absolute;
+  gap: 16px;
 }

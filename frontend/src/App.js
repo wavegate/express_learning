@@ -14,7 +14,7 @@ import Navbar from "./components/Navbar.js";
 
 import { BrowserRouter } from "react-router-dom";
 
-import LoginForm from "./components/LoginForm.js";
+import Login from "./components/Login.js";
 import useAuthContext from "./hooks/useAuthContext";
 
 const App = () => {
@@ -63,7 +63,7 @@ const App = () => {
             ></Route>
             <Route
               path="/login"
-              element={!user ? <LoginForm /> : <Navigate to="/profile" />}
+              element={!user ? <Login /> : <Navigate to="/syllabus" />}
             ></Route>
             {/* <Route
               path="/register"

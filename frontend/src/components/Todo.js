@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import useAuthContext from "../hooks/useAuthContext";
 import { Helmet } from "react-helmet-async";
 import Modal from "@mui/material/Modal";
+import AlertModal from "./AlertModal.js";
 import Alert from "@mui/material/Alert";
 import moment from "moment";
 import TodoItem from "./TodoItem.js";
@@ -23,6 +24,11 @@ const Todo = () => {
   const [editFormData, setEditFormData] = useState({});
   const handleOpen = () => {
     setOpen(true);
+  };
+  const [message, setMessage] = useState();
+  const [openComplete, setOpenComplete] = useState();
+  const handleCloseComplete = () => {
+    setOpenComplete(false);
   };
 
   const handleEditOpen = (item_id) => {
@@ -44,6 +50,8 @@ const Todo = () => {
       const data = await response.json();
       if (response.ok) {
         dispatch({ type: "DELETE_TODO", payload: data });
+        setMessage("Todo item deleted!");
+        setOpenComplete(true);
       } else {
         setError(data.error);
       }
@@ -108,6 +116,8 @@ const Todo = () => {
         });
         setError();
         handleClose();
+        setMessage("Todo item added!");
+        setOpenComplete(true);
       } else {
         setError(data.error);
       }
@@ -134,6 +144,8 @@ const Todo = () => {
         dispatch({ type: "UPDATE_TODO", payload: data });
         setEditError();
         handleEditClose();
+        setMessage("Todo item updated!");
+        setOpenComplete(true);
       } else {
         setEditError(data.error);
       }
@@ -173,6 +185,11 @@ const Todo = () => {
             />
           ))}
       </div>
+      <AlertModal
+        open={openComplete}
+        handleClose={handleCloseComplete}
+        title={message}
+      ></AlertModal>
       <Modal
         open={open || false}
         onClose={handleClose}

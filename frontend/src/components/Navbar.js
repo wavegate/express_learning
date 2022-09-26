@@ -10,6 +10,7 @@ import USFlag from "../images/FlagKit/US.svg";
 
 import { Link } from "react-router-dom";
 import classes from "../scss_modules/Navbar.module.scss";
+import Button from "./Button.js";
 
 const Navbar = () => {
   const { user } = useAuthContext();
@@ -41,13 +42,14 @@ const Navbar = () => {
           </div>
         </div>
       )}
-
-      {!user && (
-        <Link to="/login">
-          <button>Login</button>
-        </Link>
-      )}
-      {user && <button onClick={handleLogout}>Logout</button>}
+      <div className={classes.loginSection}>
+        {!user && (
+          <Link to="/login">
+            <Button>Login</Button>
+          </Link>
+        )}
+        {user && <Button onClick={handleLogout}>Logout</Button>}
+      </div>
       <div className={classes.language_selector}>
         <img
           src={USFlag}
