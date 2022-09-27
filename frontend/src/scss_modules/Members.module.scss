@@ -1,0 +1,15 @@
+@use "colors";
+
+.Members {
+  background: #eceff1;
+}
+
+.icon {
+  color: colors.$purple;
+}
+
+.content {
+  display: flex;
+  padding: 16px;
+  gap: 16px;
+}

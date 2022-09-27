@@ -8,6 +8,8 @@ export const appReducer = (state, action) => {
       return {
         objects: null,
         todos: null,
+        users: null,
+        current_user: null,
       };
     case "SET_OBJECTS":
       return {
@@ -30,21 +32,16 @@ export const appReducer = (state, action) => {
         ),
       };
     case "SET_TODOS":
-      return {
-        todos: action.payload,
-      };
+      return { ...state, todos: action.payload };
     case "CREATE_TODO":
       if (state.todos) {
-        return {
-          todos: [action.payload, ...state.todos],
-        };
+        return { ...state, todos: [action.payload, ...state.todos] };
       } else {
-        return {
-          todos: [action.payload],
-        };
+        return { ...state, todos: [action.payload] };
       }
     case "DELETE_TODO":
       return {
+        ...state,
         todos: state.todos.filter((todo) => todo._id !== action.payload._id),
       };
     case "UPDATE_TODO":
@@ -52,9 +49,11 @@ export const appReducer = (state, action) => {
         (todo) => todo._id === action.payload._id
       )[0];
       Object.assign(todo, action.payload);
-      return {
-        todos: state.todos,
-      };
+      return { ...state, todos: state.todos };
+    case "SET_USERS":
+      return { ...state, users: action.payload };
+    case "SET_CURRENT_USER":
+      return { ...state, current_user: action.payload };
     default:
       return state;
   }
@@ -64,6 +63,8 @@ export const AppContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(appReducer, {
     objects: null,
     todos: null,
+    users: null,
+    current_user: null,
   });
   return (
     <AppContext.Provider value={{ ...state, dispatch }}>

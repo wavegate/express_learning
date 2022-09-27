@@ -16,18 +16,18 @@ app.use(express.json());
 
 // await Object.deleteMany({});
 
-// // import { LoremIpsum } from "lorem-ipsum";
+import { LoremIpsum } from "lorem-ipsum";
 
-// // const lorem = new LoremIpsum({
-// //   sentencesPerParagraph: {
-// //     max: 8,
-// //     min: 4,
-// //   },
-// //   wordsPerSentence: {
-// //     max: 16,
-// //     min: 4,
-// //   },
-// // });
+const lorem = new LoremIpsum({
+  sentencesPerParagraph: {
+    max: 8,
+    min: 4,
+  },
+  wordsPerSentence: {
+    max: 16,
+    min: 4,
+  },
+});
 
 // // for (let i = 0; i < 5; i++) {
 // //   const newObject = new Object({
@@ -39,7 +39,30 @@ app.use(express.json());
 
 // import User from "./models/userModel.js";
 // await User.deleteMany({});
-// User.register("test@test.com", "ZlxE!9G!ZL40");
+// for (let i = 0; i < 5; i++) {
+//   const extra = {
+//     name: "Test name " + i,
+//     bio: lorem.generateSentences(20),
+//     role: "student",
+//   };
+//   User.register(`test${i}@test.com`, "ZlxE!9G!ZL40", null, extra);
+// }
+// for (let i = 5; i < 10; i++) {
+//   const extra = {
+//     name: "Test name " + i,
+//     bio: lorem.generateSentences(20),
+//     role: "teacher",
+//   };
+//   User.register(`test${i}@test.com`, "ZlxE!9G!ZL40", null, extra);
+// }
+//  User.register("test@test.com", "ZlxE!9G!ZL40");
+//  User.register("test1@test.com", "ZlxE!9G!ZL40");
+// User.register("test2@test.com", "ZlxE!9G!ZL40");
+// User.register("test3@test.com", "ZlxE!9G!ZL40");
+// User.register("test4@test.com", "ZlxE!9G!ZL40");
+// User.register("test5@test.com", "ZlxE!9G!ZL40");
+// User.register("test6@test.com", "ZlxE!9G!ZL40");
+// User.register("test7@test.com", "ZlxE!9G!ZL40");
 
 import objectRouter from "./routes/objectRouter.js";
 app.use("/objects", objectRouter);
@@ -64,27 +87,13 @@ const io = new Server(server, {
 import jwt_decode from "jwt-decode";
 
 io.on("connection", (socket) => {
-  socket.on("setup", (userToken) => {
+  socket.on("join chat", (userToken) => {
     const user = jwt_decode(userToken);
-    socket.join(user._id);
-    console.log(`${user._id} connected`);
-    socket.emit(`${user._id} connected`);
-  });
-  socket.on("join chat", (room) => {
-    socket.join(room);
-    console.log("User joined room: " + room);
+    socket.join("live_class");
+    console.log(`${user._id} joined room: live_class`);
   });
   socket.on("new message", (newMessageReceived) => {
-    // const chat = newMessageReceived.chat;
-    // if (!chat.users) return console.log("chat.users not defined");
-    // chat.users.forEach((user) => {
-    //   if (user._id == newMessageReceived.sender._id) {
-    //     return;
-    //   } else {
-    //     socket.in(user._id).emit("message received", newMessageReceived);
-    //   }
-    // });
     socket.emit("message received", newMessageReceived);
-    // socket.in("live_class").emit("message received", newMessageReceived);
+    socket.broadcast.emit("message received", newMessageReceived);
   });
 });

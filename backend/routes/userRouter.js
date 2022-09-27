@@ -1,12 +1,50 @@
 import express from "express";
 import User from "../models/userModel.js";
 import jwt from "jsonwebtoken";
+import requireAuth from "../middleware/requireAuth.js";
 
 const userRouter = express.Router();
 
 const createToken = (_id) => {
   return jwt.sign({ _id }, process.env.JWT_SECRET_KEY, { expiresIn: "31d" });
 };
+
+userRouter.get("/", requireAuth);
+
+userRouter.get("/", async (req, res, next) => {
+  try {
+    const users = await User.find({}, "email role name bio _id");
+    return res.status(200).json(users);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+userRouter.get("/current", requireAuth);
+
+userRouter.get("/current", async (req, res, next) => {
+  try {
+    const user_id = req.user._id;
+    const user = await User.findOne({ _id: user_id }, "email name bio role");
+    return res.status(200).json(user);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+userRouter.get("/user/:id", requireAuth);
+
+userRouter.get("/user/:id", async (req, res, next) => {
+  try {
+    const user = await User.findOne(
+      { _id: req.params.id },
+      "email name bio role"
+    );
+    return res.status(200).json(user);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
 
 userRouter.get("/login", (req, res, next) => {
   res.json({ message: "Get login" });

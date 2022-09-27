@@ -11,6 +11,8 @@ import Todo from "./components/Todo.js";
 import LiveClass from "./components/LiveClass.js";
 import Sidebar from "./components/Sidebar.js";
 import Navbar from "./components/Navbar.js";
+import Members from "./components/Members.js";
+import Register from "./components/Register.js";
 
 import { BrowserRouter } from "react-router-dom";
 
@@ -50,8 +52,12 @@ const App = () => {
               element={user ? <Lectures /> : <Navigate to="/login" />}
             ></Route>
             <Route
-              path="/profile/*"
+              path="/profile/:id/*"
               element={user ? <Profile /> : <Navigate to="/login" />}
+            ></Route>
+            <Route
+              path="/members"
+              element={user ? <Members /> : <Navigate to="/login" />}
             ></Route>
             <Route
               path="/calendar"
@@ -63,7 +69,11 @@ const App = () => {
             ></Route>
             <Route
               path="/login"
-              element={!user ? <Login /> : <Navigate to="/live_class" />}
+              element={!user ? <Login /> : <Navigate to="/members" />}
+            ></Route>
+            <Route
+              path="/register"
+              element={!user ? <Register /> : <Navigate to="/" />}
             ></Route>
             {/* <Route
               path="/register"

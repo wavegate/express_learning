@@ -102,9 +102,9 @@ const Sidebar = () => {
             text="Profile"
           ></SidebarLink>
           <SidebarLink
-            target="/classmates"
+            target="/members"
             icon={GroupsIcon}
-            text="Classmates"
+            text="Members"
           ></SidebarLink>
           <SidebarLink
             target="/inbox"

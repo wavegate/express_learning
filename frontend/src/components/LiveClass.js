@@ -23,15 +23,22 @@ import useAuthContext from "../hooks/useAuthContext.js";
 const ENDPOINT = "http://localhost:8000";
 var socket, selectedChatCompare;
 
+let done = false;
+
 const LiveClass = () => {
   const [messages, setMessages] = useState([]);
   const { user } = useAuthContext();
   const [socketConnected, setSocketConnected] = useState(false);
 
   useEffect(() => {
-    socket = io(ENDPOINT);
-    socket.emit("join chat", "live_class");
-    socket.on("connection", () => setSocketConnected(true));
+    if (!done) {
+      socket = io(ENDPOINT);
+      socket.emit("join chat", user.token);
+      socket.on("connection", () => setSocketConnected(true));
+      done = true;
+    }
+
+    // socket.on("connection", () => setSocketConnected(true));
   }, [user]);
 
   useEffect(() => {
@@ -41,8 +48,7 @@ const LiveClass = () => {
   });
 
   const sendMessage = () => {
-    socket.emit("new message", "random message content");
-    console.log("message sent");
+    socket.emit("new message", "random message");
   };
 
   return (
