@@ -69,7 +69,13 @@ const App = () => {
             ></Route>
             <Route
               path="/login"
-              element={!user ? <Login /> : <Navigate to="/members" />}
+              element={
+                !user ? (
+                  <Login />
+                ) : (
+                  <Navigate to="/profile/63322cfecc816a88d56cfa95" />
+                )
+              }
             ></Route>
             <Route
               path="/register"

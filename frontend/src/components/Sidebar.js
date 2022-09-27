@@ -14,6 +14,7 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import PlaylistAddCheckIcon from "@mui/icons-material/PlaylistAddCheck";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import LiveTvIcon from "@mui/icons-material/LiveTv";
+import useAppContext from "../hooks/useAppContext";
 
 import { NavLink } from "react-router-dom";
 
@@ -36,6 +37,7 @@ const SidebarLink = (props) => {
 };
 
 const Sidebar = () => {
+  const { current_user } = useAppContext();
   return (
     <div className={classes.Sidebar}>
       <div className={classes.sidebar_block}>
@@ -96,11 +98,13 @@ const Sidebar = () => {
             icon={ForumIcon}
             text="Discussion"
           ></SidebarLink>
-          <SidebarLink
-            target="/profile"
-            icon={AccountCircleIcon}
-            text="Profile"
-          ></SidebarLink>
+          {current_user && (
+            <SidebarLink
+              target={`/profile/${current_user._id}`}
+              icon={AccountCircleIcon}
+              text="My Profile"
+            ></SidebarLink>
+          )}
           <SidebarLink
             target="/members"
             icon={GroupsIcon}

@@ -17,7 +17,7 @@ import { useEffect } from "react";
 
 const Navbar = () => {
   const { user } = useAuthContext();
-  const { todos, current_user, dispatch } = useAppContext();
+  const { current_user, dispatch } = useAppContext();
   const { logout } = useLogout();
   const handleLogout = () => {
     logout();

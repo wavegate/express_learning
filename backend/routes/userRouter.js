@@ -46,6 +46,27 @@ userRouter.get("/user/:id", async (req, res, next) => {
   }
 });
 
+userRouter.post("/user/:id", requireAuth);
+
+userRouter.post("/user/:id", async (req, res, next) => {
+  if (req.user._id.toString() !== req.params.id) {
+    return res
+      .status(400)
+      .json({ error: "You can only update your own profile." });
+  }
+  const { name, bio } = req.body;
+  try {
+    const user = await User.findByIdAndUpdate(
+      { _id: req.params.id },
+      { name: name, bio: bio },
+      { new: true }
+    );
+    return res.status(200).json(user);
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
+});
+
 userRouter.get("/login", (req, res, next) => {
   res.json({ message: "Get login" });
 });

@@ -10,6 +10,15 @@ import { Route, Routes, NavLink, Navigate, useParams } from "react-router-dom";
 import Header from "./Header.js";
 import useAppContext from "../hooks/useAppContext";
 import useAuthContext from "../hooks/useAuthContext";
+import Alert from "@mui/material/Alert";
+import Modal from "@mui/material/Modal";
+import AlertModal from "./AlertModal";
+import Button from "./Button";
+import FormModal from "./FormModal";
+import FormGroup from "./FormGroup";
+import Label from "./Label";
+import Input from "./Input";
+import Textarea from "./Textarea";
 
 import photos from "../data/photos";
 import slides from "../data/slides";
@@ -37,11 +46,67 @@ const activeStyle = {
 };
 
 const Profile = () => {
+  const [error, setError] = useState();
+  const [open, setOpen] = useState();
   const [index, setIndex] = useState(-1);
+  const { current_user, dispatch } = useAppContext();
   const { id } = useParams();
+  const [message, setMessage] = useState();
+  const [openComplete, setOpenComplete] = useState();
 
   const { user } = useAuthContext();
   const [profile, setProfile] = useState();
+  const [formData, setFormData] = useState();
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleCloseComplete = () => {
+    setOpenComplete(false);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setFormData({});
+    setError();
+  };
+
+  const handleChange = ({ target }) => {
+    setFormData({ ...formData, [target.name]: target.value });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const submitData = async () => {
+      const response = await fetch(`/users/user/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: JSON.stringify({ ...formData }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        setProfile(data);
+        setError();
+        handleClose();
+        setMessage("Profile updated!");
+        setOpenComplete(true);
+      } else {
+        setError(data.error);
+      }
+    };
+    if (user) {
+      submitData();
+    }
+  };
+
+  useEffect(() => {
+    setFormData({ ...profile });
+  }, [profile]);
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(`/users/user/${id}`, {
@@ -51,9 +116,7 @@ const Profile = () => {
       });
       const data = await response.json();
       if (response.ok) {
-        console.log(data);
         setProfile(data);
-        // dispatch({ type: "SET_USERS", payload: data });
       }
     };
     if (user) {
@@ -83,6 +146,11 @@ const Profile = () => {
                     className={classes.cover__avatar}
                   ></img>
                   <div className={classes.title}>
+                    {current_user._id === id && (
+                      <Button type="submit" onClick={handleOpen}>
+                        Edit My Profile
+                      </Button>
+                    )}
                     <div className={classes.name}>{profile.name || ""}</div>
                     <div className={classes.role}>{profile.role || ""}</div>
                   </div>
@@ -152,7 +220,12 @@ const Profile = () => {
                     <Route path="posts" element={<Posts></Posts>} />
                     <Route
                       path="about"
-                      element={<About bio={profile.bio || ""}></About>}
+                      element={
+                        <About
+                          bio={profile.bio || ""}
+                          handleOpen={handleOpen}
+                        ></About>
+                      }
                     />
                     <Route path="settings" element={<Settings></Settings>} />
                   </Routes>
@@ -160,6 +233,46 @@ const Profile = () => {
               </div>
             </div>
           </div>
+          <Modal
+            open={open || false}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <div>
+              <FormModal title="Edit Profile">
+                <FormGroup>
+                  <Label htmlFor="name">Name</Label>
+                  <Input
+                    type="text"
+                    placeholder="Name"
+                    name="name"
+                    id="name"
+                    onChange={handleChange}
+                    value={formData.name || ""}
+                  ></Input>
+                </FormGroup>
+                <FormGroup>
+                  <Label htmlFor="bio">Bio</Label>
+                  <Textarea
+                    name="bio"
+                    id="bio"
+                    onChange={handleChange}
+                    value={formData.bio || ""}
+                  ></Textarea>
+                </FormGroup>
+                <Button type="submit" onClick={handleSubmit}>
+                  Submit
+                </Button>
+                {error && <Alert severity="error">{error}</Alert>}
+              </FormModal>
+            </div>
+          </Modal>
+          <AlertModal
+            open={openComplete}
+            handleClose={handleCloseComplete}
+            title={message}
+          ></AlertModal>
         </Fragment>
       )}
     </div>
