@@ -19,6 +19,7 @@ import FormGroup from "./FormGroup";
 import Label from "./Label";
 import Input from "./Input";
 import Textarea from "./Textarea";
+import { Paper } from "@mui/material";
 
 import photos from "../data/photos";
 import slides from "../data/slides";
@@ -38,11 +39,6 @@ const Posts = () => {
 
 const Settings = () => {
   return <div>Settings</div>;
-};
-
-const activeStyle = {
-  color: "#545CD8",
-  borderBottom: "2px solid #545CD8",
 };
 
 const Profile = () => {
@@ -136,35 +132,33 @@ const Profile = () => {
             }
           />
           <div className={classes.content}>
-            <div className={classes.leftRow}>
-              <div className={`${classes.content_box} ${classes.cover}`}>
-                <img src={cover} alt="cover" className={classes.cover__image} />
-                <div className={classes.cover__text}>
-                  <img
-                    src={avatar}
-                    alt="avatar"
-                    className={classes.cover__avatar}
-                  ></img>
-                  <div className={classes.title}>
+            <div className={classes.leftSection}>
+              <Paper elevation={4} className={classes.id}>
+                <img
+                  src={avatar}
+                  alt="avatar"
+                  className={classes.id__avatar}
+                ></img>
+                <div className={classes.id__info}>
+                  <div className={classes.id__text}>
+                    <div className={classes.id__name}>{profile.name || ""}</div>
+                    <div className={classes.id__role}>{profile.role || ""}</div>
+                    <div className={classes.id__email}>
+                      {profile.email || ""}
+                    </div>
+                  </div>
+                  <div className={classes.id__buttons}>
+                    <Button>Message</Button>
                     {current_user._id === id && (
                       <Button type="submit" onClick={handleOpen}>
-                        Edit My Profile
+                        Edit Profile
                       </Button>
                     )}
-                    <div className={classes.name}>{profile.name || ""}</div>
-                    <div className={classes.role}>{profile.role || ""}</div>
-                  </div>
-                  <div>
-                    <div className={classes.email}>{profile.email || ""}</div>
-                    <div>Email</div>
                   </div>
                 </div>
-              </div>
-              <div className={`${classes.content_box} ${classes.follow_box}`}>
-                <button>Follow</button>
-                <button>Message</button>
-              </div>
-              <div className={`${classes.content_box} ${classes.highlights}`}>
+              </Paper>
+              <div>
+                <h3>My Gallery</h3>
                 <PhotoAlbum
                   layout="rows"
                   photos={photos}
@@ -180,56 +174,57 @@ const Profile = () => {
                 />
               </div>
             </div>
-            <div>
-              <div className={`${classes.content_box} ${classes.posts_box}`}>
-                <div className={classes.tabs}>
-                  <NavLink
-                    to="posts"
-                    className={classes.tabLabel}
-                    style={({ isActive }) =>
-                      isActive ? activeStyle : undefined
+            <div className={classes.rightSection}>
+              <div className={classes.tabs}>
+                <NavLink
+                  to="posts"
+                  className={({ isActive }) =>
+                    isActive
+                      ? `${classes.activeLink} ${classes.tabLabel}`
+                      : classes.tabLabel
+                  }
+                >
+                  Posts
+                </NavLink>
+                <NavLink
+                  to="about"
+                  className={({ isActive }) =>
+                    isActive
+                      ? `${classes.activeLink} ${classes.tabLabel}`
+                      : classes.tabLabel
+                  }
+                >
+                  Bio
+                </NavLink>
+                <NavLink
+                  to="settings"
+                  className={({ isActive }) =>
+                    isActive
+                      ? `${classes.activeLink} ${classes.tabLabel}`
+                      : classes.tabLabel
+                  }
+                >
+                  Settings
+                </NavLink>
+              </div>
+              <div className={classes.tabContent}>
+                <Routes>
+                  <Route
+                    path="/"
+                    element={<Navigate to="about"></Navigate>}
+                  ></Route>
+                  <Route path="posts" element={<Posts></Posts>} />
+                  <Route
+                    path="about"
+                    element={
+                      <About
+                        bio={profile.bio || ""}
+                        handleOpen={handleOpen}
+                      ></About>
                     }
-                  >
-                    Posts
-                  </NavLink>
-                  <NavLink
-                    to="about"
-                    className={classes.tabLabel}
-                    style={({ isActive }) =>
-                      isActive ? activeStyle : undefined
-                    }
-                  >
-                    About Me
-                  </NavLink>
-                  <NavLink
-                    to="settings"
-                    className={classes.tabLabel}
-                    style={({ isActive }) =>
-                      isActive ? activeStyle : undefined
-                    }
-                  >
-                    Settings
-                  </NavLink>
-                </div>
-                <div className={classes.tabContent}>
-                  <Routes>
-                    <Route
-                      path="/"
-                      element={<Navigate to="about"></Navigate>}
-                    ></Route>
-                    <Route path="posts" element={<Posts></Posts>} />
-                    <Route
-                      path="about"
-                      element={
-                        <About
-                          bio={profile.bio || ""}
-                          handleOpen={handleOpen}
-                        ></About>
-                      }
-                    />
-                    <Route path="settings" element={<Settings></Settings>} />
-                  </Routes>
-                </div>
+                  />
+                  <Route path="settings" element={<Settings></Settings>} />
+                </Routes>
               </div>
             </div>
           </div>
