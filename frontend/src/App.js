@@ -13,6 +13,7 @@ import Sidebar from "./components/Sidebar.js";
 import Navbar from "./components/Navbar.js";
 import Members from "./components/Members.js";
 import Register from "./components/Register.js";
+import Discussion from "./components/Discussion.js";
 
 import { BrowserRouter } from "react-router-dom";
 
@@ -52,6 +53,10 @@ const App = () => {
               element={user ? <Lectures /> : <Navigate to="/login" />}
             ></Route>
             <Route
+              path="/discussion/*"
+              element={user ? <Discussion /> : <Navigate to="/login" />}
+            ></Route>
+            <Route
               path="/profile/:id/*"
               element={user ? <Profile /> : <Navigate to="/login" />}
             ></Route>
@@ -69,13 +74,7 @@ const App = () => {
             ></Route>
             <Route
               path="/login"
-              element={
-                !user ? (
-                  <Login />
-                ) : (
-                  <Navigate to="/profile/63322cfecc816a88d56cfa95" />
-                )
-              }
+              element={!user ? <Login /> : <Navigate to="/discussion" />}
             ></Route>
             <Route
               path="/register"

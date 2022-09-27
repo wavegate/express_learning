@@ -1,0 +1,74 @@
+.Thread {
+}
+
+.paper {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.thread__header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.author_identity {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.author_identity__avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.author_identity__firstRow {
+  display: flex;
+  gap: 12px;
+}
+
+.thread__icons {
+  display: flex;
+  gap: 12px;
+}
+
+.thread__icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.comment {
+  display: flex;
+  gap: 12px;
+}
+
+.comment_post {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.comment__avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.post__header {
+  display: flex;
+  gap: 12px;
+}
+
+.thread__actions {
+  display: flex;
+  gap: 6px;
+}

@@ -1,0 +1,48 @@
+.Discussion {
+  background: #eceff1;
+}
+
+.content {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+}
+
+.threadColumn {
+  padding: 12px;
+}
+
+.thread {
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  width: 400px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.thread__firstRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.thread__title {
+  display: flex;
+  gap: 12px;
+}
+
+.thread__secondRow {
+  display: flex;
+  gap: 12px;
+}
+
+.thread__numComments {
+  display: flex;
+  gap: 6px;
+}
+
+.activeLink {
+  background: #e0f3ff;
+}

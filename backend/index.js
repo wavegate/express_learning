@@ -64,12 +64,17 @@ const lorem = new LoremIpsum({
 // User.register("test6@test.com", "ZlxE!9G!ZL40");
 // User.register("test7@test.com", "ZlxE!9G!ZL40");
 
+// import Thread from "./models/threadModel.js";
+// await Thread.deleteMany({});
+
 import objectRouter from "./routes/objectRouter.js";
 app.use("/objects", objectRouter);
 import userRouter from "./routes/userRouter.js";
 app.use("/users", userRouter);
 import todoRouter from "./routes/todoRouter.js";
 app.use("/todos", todoRouter);
+import threadRouter from "./routes/threadRouter.js";
+app.use("/threads", threadRouter);
 
 const port = 8000;
 const server = app.listen(port, () => {
