@@ -74,27 +74,31 @@ export const appReducer = (state, action) => {
       Object.assign(thread, action.payload);
       return { ...state, threads: state.threads };
     case "SET_COMMENTS":
-      return { ...state, comments: action.payload };
+      return state;
     case "CREATE_COMMENT":
       // console.log(action.payload);
-      const currThread = state.threads.filter(
+      let currThread = state.threads.filter(
         (thread) => thread._id === action.payload.thread
       );
       currThread[0].comments = [...currThread[0].comments, action.payload];
       return state;
     case "DELETE_COMMENT":
-      return {
-        ...state,
-        comments: state.comments.filter(
-          (comment) => comment._id !== action.payload._id
-        ),
-      };
+      const whatThread = state.threads.filter(
+        (thread) => thread._id === action.payload.thread
+      )[0];
+      whatThread.comments = whatThread.comments.filter(
+        (comment) => comment._id !== action.payload._id
+      );
+      return state;
     case "UPDATE_COMMENT":
-      const comment = state.comments.filter(
+      const commentThread = state.threads.filter(
+        (thread) => thread._id === action.payload.thread
+      )[0];
+      const comment = commentThread.comments.filter(
         (comment) => comment._id === action.payload._id
       )[0];
       Object.assign(comment, action.payload);
-      return { ...state, comments: state.comments };
+      return state;
     case "SET_USERS":
       return { ...state, users: action.payload };
     case "SET_CURRENT_USER":

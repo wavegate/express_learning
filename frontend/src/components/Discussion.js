@@ -1,7 +1,14 @@
 import classes from "../scss_modules/Discussion.module.scss";
 import "yet-another-react-lightbox/styles.css";
 import { useState, useEffect, Fragment } from "react";
-import { Route, Routes, NavLink, Navigate, useParams } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  NavLink,
+  Navigate,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import Header from "./Header.js";
 import useAppContext from "../hooks/useAppContext";
 import useAuthContext from "../hooks/useAuthContext";
@@ -23,6 +30,7 @@ import Thread from "./Thread";
 import moment from "moment";
 
 const Discussion = () => {
+  const navigate = useNavigate();
   const [error, setError] = useState();
   const [open, setOpen] = useState();
   const [index, setIndex] = useState(-1);
@@ -31,6 +39,7 @@ const Discussion = () => {
   const [message, setMessage] = useState();
   const [openComplete, setOpenComplete] = useState();
   const [isLoading, setIsLoading] = useState();
+  const [currentThread, setCurrentThread] = useState();
 
   const { user } = useAuthContext();
   const [formData, setFormData] = useState({});
@@ -74,6 +83,7 @@ const Discussion = () => {
         setMessage("Thread created!");
         setOpenComplete(true);
         setIsLoading(false);
+        navigate(data._id);
       } else {
         setError(data.error);
         setIsLoading(false);
@@ -99,7 +109,7 @@ const Discussion = () => {
     if (user) {
       fetchData();
     }
-  }, []);
+  }, [user, dispatch]);
 
   return (
     <div className={classes.Discussion}>

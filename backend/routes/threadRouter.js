@@ -18,7 +18,6 @@ threadRouter.get("/", async (req, res, next) => {
         createdAt: "desc",
       })
       .exec();
-    console.log(threads);
     return res.status(200).json(threads);
   } catch (error) {
     res.status(400).json({ error: error.message });

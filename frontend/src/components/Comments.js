@@ -19,11 +19,15 @@ import FormGroup from "./FormGroup";
 import Label from "./Label";
 import Input from "./Input";
 import Textarea from "./Textarea";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 const Comments = (props) => {
   const [formData, setFormData] = useState({});
+  const [editFormData, setEditFormData] = useState({});
   const [error, setError] = useState();
+  const [editError, setEditError] = useState();
   const [open, setOpen] = useState();
+  const [editOpen, setEditOpen] = useState();
   const { threads, dispatch } = useAppContext();
   const { id } = useParams();
   const [openComplete, setOpenComplete] = useState();
@@ -33,6 +37,15 @@ const Comments = (props) => {
   const handleOpen = () => {
     setOpen(true);
     setFormData({});
+  };
+
+  const handleEditOpen = (item_id) => {
+    setEditOpen(true);
+    const currentComment = props.thread.comments.filter(
+      (object) => object._id === item_id
+    )[0];
+    console.log(currentComment);
+    setEditFormData(currentComment);
   };
 
   const handleCloseComplete = () => {
@@ -45,8 +58,18 @@ const Comments = (props) => {
     setError();
   };
 
+  const handleEditClose = () => {
+    setEditOpen(false);
+    setEditFormData({});
+    setEditError();
+  };
+
   const handleChange = ({ target }) => {
     setFormData({ ...formData, [target.name]: target.value });
+  };
+
+  const handleEditChange = ({ target }) => {
+    setEditFormData({ ...editFormData, [target.name]: target.value });
   };
 
   const handleSubmit = (event) => {
@@ -87,18 +110,18 @@ const Comments = (props) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.token}`,
         },
-        body: JSON.stringify({ ...formData }),
+        body: JSON.stringify({ ...editFormData }),
       });
       const data = await response.json();
       if (response.ok) {
-        dispatch({ type: "UPDATE_THREAD", payload: data });
-        setError();
-        handleClose();
-        setFormData({});
-        setMessage("Thread updated!");
+        dispatch({ type: "UPDATE_COMMENT", payload: data });
+        setEditError();
+        handleEditClose();
+        setEditFormData({});
+        setMessage("Comment updated!");
         setOpenComplete(true);
       } else {
-        setError(data.error);
+        setEditError(data.error);
       }
     };
     if (user) {
@@ -106,7 +129,7 @@ const Comments = (props) => {
     }
   };
 
-  const handleDelete = () => {
+  const handleDelete = (item_id) => {
     const postDelete = async () => {
       const response = await fetch(`/comments/delete`, {
         method: "DELETE",
@@ -114,7 +137,7 @@ const Comments = (props) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.token}`,
         },
-        body: JSON.stringify({ id: id }),
+        body: JSON.stringify({ _id: item_id }),
       });
       const data = await response.json();
       if (response.ok) {
@@ -157,7 +180,13 @@ const Comments = (props) => {
                   </div>
                   <div className={classes.post__content}>{comment.body}</div>
                   <div className={classes.post__actions}>
-                    Heart Reply Edit Delete
+                    <FavoriteBorderIcon />
+                    <span onClick={() => handleEditOpen(comment._id)}>
+                      Edit
+                    </span>{" "}
+                    <span onClick={() => handleDelete(comment._id)}>
+                      Delete
+                    </span>
                   </div>
                 </div>
               </div>
@@ -185,6 +214,30 @@ const Comments = (props) => {
               Submit
             </Button>
             {error && <Alert severity="error">{error}</Alert>}
+          </FormModal>
+        </div>
+      </Modal>
+      <Modal
+        open={editOpen || false}
+        onClose={handleEditClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <div>
+          <FormModal title="Edit Comment">
+            <FormGroup>
+              <Label htmlFor="body">Body</Label>
+              <Textarea
+                name="body"
+                id="body"
+                onChange={handleEditChange}
+                value={editFormData.body || ""}
+              ></Textarea>
+            </FormGroup>
+            <Button type="submit" onClick={handleEditSubmit}>
+              Submit
+            </Button>
+            {editError && <Alert severity="error">{editError}</Alert>}
           </FormModal>
         </div>
       </Modal>

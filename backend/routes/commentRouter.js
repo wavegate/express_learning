@@ -25,7 +25,6 @@ commentRouter.post("/create/:id", async (req, res, next) => {
   try {
     const user = req.user;
     const thread = await Thread.findOne({ _id: req.params.id });
-    console.log(thread);
     const comment = await Comment.create({
       body: body,
       author: user.id,
@@ -63,9 +62,9 @@ commentRouter.post("/update", async (req, res, next) => {
 });
 
 commentRouter.delete("/delete", async (req, res, next) => {
-  const { id } = req.body;
+  const { _id } = req.body;
   try {
-    const deletedComment = await Comment.findOneAndDelete({ _id: id });
+    const deletedComment = await Comment.findOneAndDelete({ _id: _id });
     res.status(200).json(deletedComment);
   } catch (error) {
     res.status(400).json({ error: error.message });

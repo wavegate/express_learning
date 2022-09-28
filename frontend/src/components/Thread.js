@@ -153,9 +153,8 @@ const Thread = () => {
           </div>
           <div className={classes.thread__post}>{thread.body}</div>
           <div className={classes.thread__actions}>
-            <Button>Heart</Button>
-            <Button onClick={handleOpen}>Edit</Button>
-            <Button onClick={handleDelete}>Delete</Button>
+            <Button onClick={handleOpen}>Edit Thread</Button>
+            <Button onClick={handleDelete}>Delete Thread</Button>
           </div>
           <Comments thread={thread} />
         </Paper>
