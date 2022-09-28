@@ -1,4 +1,4 @@
-import classes from "../scss_modules/Thread.module.scss";
+import classes from "../scss_modules/Comments.module.scss";
 import { Route, Routes, NavLink, Navigate, useParams } from "react-router-dom";
 import { Paper } from "@mui/material";
 import avatar2 from "../images/avatar2.png";
@@ -19,22 +19,21 @@ import FormGroup from "./FormGroup";
 import Label from "./Label";
 import Input from "./Input";
 import Textarea from "./Textarea";
-import Comments from "./Comments";
 
-const Thread = () => {
+const Comments = (props) => {
   const [formData, setFormData] = useState({});
   const [error, setError] = useState();
   const [open, setOpen] = useState();
   const { threads, dispatch } = useAppContext();
   const { id } = useParams();
-  const [thread, setThread] = useState();
   const [openComplete, setOpenComplete] = useState();
   const { user } = useAuthContext();
   const [message, setMessage] = useState();
 
   const handleOpen = () => {
+    console.log(props.thread.comments);
     setOpen(true);
-    setFormData(thread);
+    setFormData({});
   };
 
   const handleCloseComplete = () => {
@@ -54,7 +53,35 @@ const Thread = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const submitData = async () => {
-      const response = await fetch(`/threads/update`, {
+      const response = await fetch(`/comments/create/${props.thread._id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: JSON.stringify({ ...formData }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        dispatch({ type: "CREATE_COMMENT", payload: data });
+        setError();
+        handleClose();
+        setFormData({});
+        setMessage("Comment created!");
+        setOpenComplete(true);
+      } else {
+        setError(data.error);
+      }
+    };
+    if (user) {
+      submitData();
+    }
+  };
+
+  const handleEditSubmit = (event) => {
+    event.preventDefault();
+    const submitData = async () => {
+      const response = await fetch(`/comments/update`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -81,7 +108,7 @@ const Thread = () => {
 
   const handleDelete = () => {
     const postDelete = async () => {
-      const response = await fetch(`/threads/delete`, {
+      const response = await fetch(`/comments/delete`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -91,8 +118,8 @@ const Thread = () => {
       });
       const data = await response.json();
       if (response.ok) {
-        dispatch({ type: "DELETE_THREAD", payload: data });
-        setMessage("Thread deleted!");
+        dispatch({ type: "DELETE_COMMENT", payload: data });
+        setMessage("Comment deleted!");
         setOpenComplete(true);
       } else {
         setError(data.error);
@@ -103,63 +130,40 @@ const Thread = () => {
     }
   };
 
-  useEffect(() => {
-    threads && setThread(threads.filter((thread) => thread._id === id)[0]);
-  }, [threads, id]);
-
   return (
-    <div className={classes.Thread}>
-      {!thread && (
-        <div className={classes.noThread}>Please select a thread to view.</div>
-      )}
-      {thread && (
-        <Paper elevation={4} className={classes.paper}>
-          <div className={classes.title}>{thread.title}</div>
-          <div className={classes.thread__header}>
-            <div className={classes.author_identity}>
-              <img
-                src={avatar2}
-                alt="avatar"
-                className={classes.author_identity__avatar}
-              ></img>
-              <div className={classes.author_identity__text}>
-                <div className={classes.author_identity__firstRow}>
-                  <div className={classes.author_identity__name}>
-                    {thread.author.name}
+    <div className={classes.Comments}>
+      <Button className={classes.addCommentButton} onClick={handleOpen}>
+        <ChatBubbleOutlineIcon />
+        Add comment
+      </Button>
+      <div className={classes.comments}>
+        {props.thread.comments &&
+          props.thread.comments.map((comment) => {
+            return (
+              <div className={classes.comment} key={comment._id}>
+                <img
+                  src={avatar1}
+                  alt="avatar"
+                  className={classes.comment__avatar}
+                ></img>
+                <div className={classes.comment_post}>
+                  <div className={classes.post__header}>
+                    <div className={classes.header__name}>
+                      {comment.author.name}
+                    </div>
+                    <div className={classes.header__time}>
+                      {moment(comment.createdAt).fromNow()}
+                    </div>
                   </div>
-                  <div className={classes.author_identity__role}>
-                    {thread.author.role}
+                  <div className={classes.post__content}>{comment.body}</div>
+                  <div className={classes.post__actions}>
+                    Heart Reply Edit Delete
                   </div>
                 </div>
-                <div className={classes.author_identity__time}>
-                  {moment(thread.createdAt).fromNow()}
-                </div>
               </div>
-            </div>
-            <div className={classes.thread__icons}>
-              <div className={classes.thread__icon}>
-                <PushPinIcon className={classes.icon__icon} />
-                <div className={classes.icon__text}>Pinned</div>
-              </div>
-              <div className={classes.thread__icon}>
-                <StarIcon className={classes.icon__icon} />
-                <div className={classes.icon__text}>Star</div>
-              </div>
-              <div className={classes.thread__icon}>
-                <div className={classes.numViews}>92</div>
-                <div className={classes.icon__text}>Views</div>
-              </div>
-            </div>
-          </div>
-          <div className={classes.thread__post}>{thread.body}</div>
-          <div className={classes.thread__actions}>
-            <Button>Heart</Button>
-            <Button onClick={handleOpen}>Edit</Button>
-            <Button onClick={handleDelete}>Delete</Button>
-          </div>
-          <Comments thread={thread} />
-        </Paper>
-      )}
+            );
+          })}
+      </div>
       <Modal
         open={open || false}
         onClose={handleClose}
@@ -167,18 +171,7 @@ const Thread = () => {
         aria-describedby="modal-modal-description"
       >
         <div>
-          <FormModal title="Edit Thread">
-            <FormGroup>
-              <Label htmlFor="title">Title</Label>
-              <Input
-                type="text"
-                placeholder="title"
-                name="title"
-                id="title"
-                onChange={handleChange}
-                value={formData.title || ""}
-              ></Input>
-            </FormGroup>
+          <FormModal title="Add Comment">
             <FormGroup>
               <Label htmlFor="body">Body</Label>
               <Textarea
@@ -204,4 +197,4 @@ const Thread = () => {
   );
 };
 
-export default Thread;
+export default Comments;

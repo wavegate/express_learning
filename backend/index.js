@@ -75,6 +75,8 @@ import todoRouter from "./routes/todoRouter.js";
 app.use("/todos", todoRouter);
 import threadRouter from "./routes/threadRouter.js";
 app.use("/threads", threadRouter);
+import commentRouter from "./routes/commentRouter.js";
+app.use("/comments", commentRouter);
 
 const port = 8000;
 const server = app.listen(port, () => {

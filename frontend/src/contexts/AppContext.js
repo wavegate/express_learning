@@ -71,6 +71,27 @@ export const appReducer = (state, action) => {
       )[0];
       Object.assign(thread, action.payload);
       return { ...state, threads: state.threads };
+    case "SET_COMMENTS":
+      return { ...state, comments: action.payload };
+    case "CREATE_COMMENT":
+      if (state.comments) {
+        return { ...state, comments: [action.payload, ...state.comments] };
+      } else {
+        return { ...state, comments: [action.payload] };
+      }
+    case "DELETE_COMMENT":
+      return {
+        ...state,
+        comments: state.comments.filter(
+          (comment) => comment._id !== action.payload._id
+        ),
+      };
+    case "UPDATE_COMMENT":
+      const comment = state.comments.filter(
+        (comment) => comment._id === action.payload._id
+      )[0];
+      Object.assign(comment, action.payload);
+      return { ...state, comments: state.comments };
     case "SET_USERS":
       return { ...state, users: action.payload };
     case "SET_CURRENT_USER":
@@ -87,6 +108,7 @@ export const AppContextProvider = ({ children }) => {
     users: null,
     current_user: null,
     threads: null,
+    comments: null,
   });
   return (
     <AppContext.Provider value={{ ...state, dispatch }}>

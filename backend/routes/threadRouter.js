@@ -9,10 +9,16 @@ threadRouter.get("/", async (req, res, next) => {
   try {
     const threads = await Thread.find({})
       .populate("author", "name role")
+      .populate({
+        path: "comments",
+        select: "body author createdAt",
+        populate: { path: "author", select: "name role" },
+      })
       .sort({
         createdAt: "desc",
       })
       .exec();
+    console.log(threads);
     return res.status(200).json(threads);
   } catch (error) {
     res.status(400).json({ error: error.message });

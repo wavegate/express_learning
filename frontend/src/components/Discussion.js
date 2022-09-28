@@ -30,6 +30,7 @@ const Discussion = () => {
   const { id } = useParams();
   const [message, setMessage] = useState();
   const [openComplete, setOpenComplete] = useState();
+  const [isLoading, setIsLoading] = useState();
 
   const { user } = useAuthContext();
   const [formData, setFormData] = useState({});
@@ -53,6 +54,7 @@ const Discussion = () => {
   };
 
   const handleSubmit = (event) => {
+    setIsLoading(true);
     event.preventDefault();
     const submitData = async () => {
       const response = await fetch(`/threads/create`, {
@@ -71,8 +73,10 @@ const Discussion = () => {
         setFormData({});
         setMessage("Thread created!");
         setOpenComplete(true);
+        setIsLoading(false);
       } else {
         setError(data.error);
+        setIsLoading(false);
       }
     };
     if (user) {
@@ -178,7 +182,7 @@ const Discussion = () => {
                 value={formData.body || ""}
               ></Textarea>
             </FormGroup>
-            <Button type="submit" onClick={handleSubmit}>
+            <Button type="submit" onClick={handleSubmit} disabled={isLoading}>
               Submit
             </Button>
             {error && <Alert severity="error">{error}</Alert>}
