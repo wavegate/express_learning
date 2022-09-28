@@ -74,7 +74,7 @@ const App = () => {
             ></Route>
             <Route
               path="/login"
-              element={!user ? <Login /> : <Navigate to="/discussion" />}
+              element={!user ? <Login /> : <Navigate to="/dashboard" />}
             ></Route>
             <Route
               path="/register"

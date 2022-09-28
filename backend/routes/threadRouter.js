@@ -63,6 +63,14 @@ threadRouter.post("/update", async (req, res, next) => {
     );
     const returnThread = await Thread.findOne({ _id: thread._id })
       .populate("author", "name role")
+      .populate({
+        path: "comments",
+        select: "body author createdAt",
+        populate: { path: "author", select: "name role" },
+      })
+      .sort({
+        createdAt: "desc",
+      })
       .exec();
     res.status(200).json(returnThread);
   } catch (error) {

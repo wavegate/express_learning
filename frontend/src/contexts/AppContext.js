@@ -3,6 +3,8 @@ import { createContext, useReducer } from "react";
 export const AppContext = createContext();
 
 export const appReducer = (state, action) => {
+  console.log(state);
+  console.log(action);
   switch (action.type) {
     case "CLEAR":
       return {
@@ -74,11 +76,12 @@ export const appReducer = (state, action) => {
     case "SET_COMMENTS":
       return { ...state, comments: action.payload };
     case "CREATE_COMMENT":
-      if (state.comments) {
-        return { ...state, comments: [action.payload, ...state.comments] };
-      } else {
-        return { ...state, comments: [action.payload] };
-      }
+      // console.log(action.payload);
+      const currThread = state.threads.filter(
+        (thread) => thread._id === action.payload.thread
+      );
+      currThread[0].comments = [...currThread[0].comments, action.payload];
+      return state;
     case "DELETE_COMMENT":
       return {
         ...state,
@@ -108,7 +111,6 @@ export const AppContextProvider = ({ children }) => {
     users: null,
     current_user: null,
     threads: null,
-    comments: null,
   });
   return (
     <AppContext.Provider value={{ ...state, dispatch }}>

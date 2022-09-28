@@ -99,7 +99,7 @@ const Discussion = () => {
     if (user) {
       fetchData();
     }
-  }, [user, dispatch]);
+  }, []);
 
   return (
     <div className={classes.Discussion}>

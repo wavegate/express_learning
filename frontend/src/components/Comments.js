@@ -31,7 +31,6 @@ const Comments = (props) => {
   const [message, setMessage] = useState();
 
   const handleOpen = () => {
-    console.log(props.thread.comments);
     setOpen(true);
     setFormData({});
   };
@@ -51,6 +50,7 @@ const Comments = (props) => {
   };
 
   const handleSubmit = (event) => {
+    console.log("submit");
     event.preventDefault();
     const submitData = async () => {
       const response = await fetch(`/comments/create/${props.thread._id}`, {
