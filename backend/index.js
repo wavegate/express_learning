@@ -83,7 +83,7 @@ app.use("/threads", threadRouter);
 import commentRouter from "./routes/commentRouter.js";
 app.use("/comments", commentRouter);
 
-const port = 8000;
+const port = process.env.PORT || 8000;
 const server = app.listen(port, () => {
   console.log(`Server listening on http://localhost:${port}/`);
 });
