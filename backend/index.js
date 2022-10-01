@@ -12,6 +12,8 @@ mongoose.connect(process.env.MONGODB_URI, {
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+import cors from "cors";
+app.use(cors());
 import compression from "compression";
 app.use(compression());
 import helmet from "helmet";

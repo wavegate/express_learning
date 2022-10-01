@@ -9,11 +9,14 @@ const useLogin = () => {
   const login = async (email, password) => {
     setIsLoading(true);
     setError();
-    const response = await fetch(`/users/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: email, password: password }),
-    });
+    const response = await fetch(
+      `https://argos-ed-tech.herokuapp.com/users/login`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email, password: password }),
+      }
+    );
     const data = await response.json();
     if (response.ok) {
       dispatch({ type: "LOGIN", payload: data });
