@@ -3,7 +3,6 @@ import { createContext, useReducer } from "react";
 export const AppContext = createContext();
 
 export const appReducer = (state, action) => {
-  console.log(state);
   console.log(action);
   switch (action.type) {
     case "CLEAR":
@@ -76,7 +75,6 @@ export const appReducer = (state, action) => {
     case "SET_COMMENTS":
       return state;
     case "CREATE_COMMENT":
-      // console.log(action.payload);
       let currThread = state.threads.filter(
         (thread) => thread._id === action.payload.thread
       );

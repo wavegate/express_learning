@@ -12,6 +12,11 @@ mongoose.connect(process.env.MONGODB_URI, {
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+import compression from "compression";
+app.use(compression());
+import helmet from "helmet";
+app.use(helmet());
+
 // import Object from "./models/objectModel.js";
 
 // await Object.deleteMany({});
